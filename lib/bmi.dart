@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ichallengeyouapp/resultbmi.dart';
 class bmi extends StatefulWidget {
   const bmi({ Key? key }) : super(key: key);
 
@@ -13,87 +14,53 @@ class _bmiState extends State<bmi> {
       title: "I Challenge You",
       home: Scaffold(
         appBar: AppBar(
-          title: Text("I Challenge You"),
+          title: const Text("I Challenge You"),
         ),
         body: Container(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           color: Colors.orange[50],
-          child: Column(
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
-                child: Row(
+          child: Expanded (
+            child: Column(
+              children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: const [
-                    Text("I Challenge You", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),),
+                    Text("I Challenge You", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
                   ],
                 ),
-              ),
-              const SizedBox(height: 20,),
-              Center(
-                child: Container(
-                  // height: 300,
-                  width: 350,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    elevation: 10,
+                const SizedBox(height: 20,),
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                  elevation: 10,
+                  child: Container (
+                    padding: EdgeInsets.all(16),
                     child: Column(
                       children: [
-                        Container(
-                          padding: EdgeInsets.only(top: 16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              Text("BMI Calculator", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),)
-                            ],
+                        const Text("BMI Calculator", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                        const SizedBox(height: 20,),
+                        const TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Input your height (cm)",
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const[
-                              Text("Input your height (cm): ", style: TextStyle(fontSize: 16),),
-                            ],
+                        const SizedBox(height: 20,),
+                        const TextField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Input your weight (kg)",
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          child: const TextField(
-                            // ignore: unnecessary_const
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: "155",
-                            ),
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(20, 8, 0, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
-                              Text("Input your wweight (kg): ", style: TextStyle(fontSize: 16),),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          child: const TextField(
-                            // ignore: unnecessary_const
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: "55",
-                            ),
-                          ),
-                        ),
-                        ElevatedButton(onPressed: () {}, child: const Text("Calculate")),
+                        const SizedBox(height: 30,),
+                        ElevatedButton(onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => resultBMI()));
+                        }, child: Text("calculate")),
                       ],
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 

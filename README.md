@@ -1,16 +1,21 @@
 # ichallengeyouapp
 
-A new Flutter project.
+Pembagian Pekerjaan:
+Yehezkiel:
+- profile
+  - profile akan menyimpan data" dari user na yg di smpn DB firebase
+- edit profile
+  - Bisa mengedit username dari profile nya  
+- register
+  - melakukan penambahan data user disimpan dalam Db firebase nya 
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+Felicia:
+- BMI Calculator
+- result BMI calculator
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Levina:
+- challenges
+  - membutuhkan koneksi database
+- set alarm and done challenges
+  - membutuhkan alarm

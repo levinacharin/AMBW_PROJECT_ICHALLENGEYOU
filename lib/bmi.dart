@@ -16,96 +16,179 @@ class _bmiState extends State<bmi> {
           title: Text("I Challenge You"),
         ),
         body: Container(
+          color: Colors.orange[50],
           child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(133, 50, 133, 50),
-                    decoration: new BoxDecoration(
-                      color: Colors.orange[50]
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text("I Challenge You", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20,),
+              Center(
+                child: Container(
+                  // height: 300,
+                  width: 350,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    child: Text("I Challenge You",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(20),
+                    elevation: 10,
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          child: Text("BMI CALCULATOR")),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                          padding: EdgeInsets.only(top: 16),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                            Icon(Icons.person),
-                            Icon(Icons.person)
-                          ],),
+                            children: const [
+                              Text("BMI Calculator", style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),)
+                            ],
+                          ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          child: Column(children: [
-                          Text("Input Your Age:"),
-                          TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey[350],
-                              border: OutlineInputBorder(),
-                            ),
-                          )
-                          ],),)
-                        ,
+                          padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const[
+                              Text("Input your height (cm): ", style: TextStyle(fontSize: 16),),
+                            ],
+                          ),
+                        ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          child: Column(children: [
-                          Text("Input Your Height (cm):"),
-                          TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey[350],
+                          padding: const EdgeInsets.all(16),
+                          child: const TextField(
+                            // ignore: unnecessary_const
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(),
+                              hintText: "155",
                             ),
-                          )
-                          ],),)
-                        ,
+                          ),
+                        ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          child: Column(children: [
-                          Text("Input Your Weight (kg):"),
-                          TextField(
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Colors.grey[350],
+                          padding: const EdgeInsets.fromLTRB(20, 8, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: const [
+                              Text("Input your wweight (kg): ", style: TextStyle(fontSize: 16),),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          child: const TextField(
+                            // ignore: unnecessary_const
+                            decoration: const InputDecoration(
                               border: OutlineInputBorder(),
+                              hintText: "55",
                             ),
-                          )
-                          ],),)
-                        ,
+                          ),
+                        ),
+                        ElevatedButton(onPressed: () {}, child: const Text("Calculate")),
                       ],
                     ),
                   ),
-                  ElevatedButton(onPressed: (){}, child: Text("SUBMIT"))
-                ],
-              )
+                ),
+              ),
+            ],
+          ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.calculate, color: Colors.blue,),
-                //title: new Text("BMI",)
-            ),
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.assignment),
-                //title: new Text("Challenges")
-            ),
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.account_circle),
-                //title: new Text("Profile")
-            ),
+
+
+        // body: Container(
+        //   child: Column(
+        //         children: [
+        //           Container(
+        //             padding: EdgeInsets.fromLTRB(133, 50, 133, 50),
+        //             decoration: new BoxDecoration(
+        //               color: Colors.orange[50]
+        //             ),
+        //             child: Text("I Challenge You",
+        //             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),)
+        //           ),
+        //           Container(
+        //             padding: EdgeInsets.all(20),
+        //             child: Column(
+        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //               children: [
+        //                 Container(
+        //                   child: Text("BMI CALCULATOR")),
+        //                 Container(
+        //                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        //                   child: Row(
+        //                     mainAxisAlignment: MainAxisAlignment.center,
+        //                     children: [
+        //                     Icon(Icons.person),
+        //                     Icon(Icons.person)
+        //                   ],),
+        //                 ),
+        //                 Container(
+        //                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        //                   child: Column(children: [
+        //                   Text("Input Your Age:"),
+        //                   TextField(
+        //                     decoration: InputDecoration(
+        //                       filled: true,
+        //                       fillColor: Colors.grey[350],
+        //                       border: OutlineInputBorder(),
+        //                     ),
+        //                   )
+        //                   ],),)
+        //                 ,
+        //                 Container(
+        //                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        //                   child: Column(children: [
+        //                   Text("Input Your Height (cm):"),
+        //                   TextField(
+        //                     decoration: InputDecoration(
+        //                       filled: true,
+        //                       fillColor: Colors.grey[350],
+        //                       border: OutlineInputBorder(),
+        //                     ),
+        //                   )
+        //                   ],),)
+        //                 ,
+        //                 Container(
+        //                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        //                   child: Column(children: [
+        //                   Text("Input Your Weight (kg):"),
+        //                   TextField(
+        //                     decoration: InputDecoration(
+        //                       filled: true,
+        //                       fillColor: Colors.grey[350],
+        //                       border: OutlineInputBorder(),
+        //                     ),
+        //                   )
+        //                   ],),)
+        //                 ,
+        //               ],
+        //             ),
+        //           ),
+        //           ElevatedButton(onPressed: (){}, child: Text("SUBMIT"))
+        //         ],
+        //       )
+        // ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: [
+        //     BottomNavigationBarItem(
+        //         icon: new Icon(Icons.calculate, color: Colors.blue,),
+        //         //title: new Text("BMI",)
+        //     ),
+        //     BottomNavigationBarItem(
+        //         icon: new Icon(Icons.assignment),
+        //         //title: new Text("Challenges")
+        //     ),
+        //     BottomNavigationBarItem(
+        //         icon: new Icon(Icons.account_circle),
+        //         //title: new Text("Profile")
+        //     ),
             
                 
-          ],
-        ),
+        //   ],
+        // ),
       ),
     );
   }

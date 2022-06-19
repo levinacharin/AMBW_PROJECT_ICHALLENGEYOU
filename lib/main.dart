@@ -1,60 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ichallengeyouapp/bmi.dart';
+import 'package:ichallengeyouapp/firebase_options.dart';
 
-void main() {
-  runApp(MaterialApp(
-    title: "I Challenge You",
-    home: MyApp(),
-  ));
+import 'dataclass.dart';
+import 'dbservices.dart';
+import 'detdata.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    MaterialApp(
+      title: "ICHALLENGEYOU",
+      home: MyApp(),
+    )
+  );
 }
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: "I Challenge You",
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text("I Challenge You"),
-//         ),
-//         body: Container(
-
-//         ),
-//         bottomNavigationBar: BottomNavigationBar(
-//           items: [
-//             BottomNavigationBarItem(
-//                 icon: new Icon(Icons.calculate, color: Colors.blue,),
-//                 //title: new Text("BMI",)
-//             ),
-//             BottomNavigationBarItem(
-//                 icon: new Icon(Icons.assignment),
-//                 //title: new Text("Challenges")
-//             ),
-//             BottomNavigationBarItem(
-//                 icon: new Icon(Icons.account_circle),
-//                 //title: new Text("Profile")
-//             ),
-            
-                
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// Punya felak titip bentar
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -63,19 +28,102 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _searchText = TextEditingController();
+  @override
+  void dispose(){
+    _searchText.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState(){
+    _searchText.addListener(onSearch);
+    super.initState();
+  }
+
+  Stream<QuerySnapshot<Object?>> onSearch(){
+    setState(() {
+      
+    });
+    return Database.getData(_searchText.text);
+  }
+
+  int _jumlah = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("I Challenge You"),
+        title: Text("FIREBASE CRUD"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // _jumlah++;
+          // final dtBaru = itemCatatan(itemJudul: _jumlah.toString(), itemIisi: "33334");
+          // Database.tambahData(item: dtBaru);
+
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>detData()));
+        },
+        backgroundColor: Colors.blueGrey,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 32,
+        ),
       ),
       body: Container(
-        margin: EdgeInsets.all(16),
+        margin: EdgeInsets.fromLTRB(8, 20, 8, 8),
         child: Column(
           children: [
-            ElevatedButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => bmi()));
-            }, child: Text("BMI Calculator")),
+            TextField(
+              controller: _searchText,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: Colors.blue)),
+              ),
+            ),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: onSearch(),
+                builder: (context,snapshot){
+                  if(snapshot.hasError){
+                    return Text('ERROR');
+                  }else if(snapshot.hasData || snapshot.data != null){
+                    return ListView.separated(
+                      itemBuilder: (context, index){
+                        DocumentSnapshot dsData = snapshot.data!.docs[index];
+                        //mengambil data per index ke dalam variabel data
+                        String lvJudul = dsData['judulCat'];
+                        String lvIsi = dsData['isiCat'];
+                        _jumlah = snapshot.data!.docs.length;
+                        return ListTile(
+                          onTap: (){
+                            final dtBaru = itemCatatan(itemJudul: lvJudul, itemIisi: lvIsi);
+                            // Database.ubahData(item: dtBaru);
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>detData(dataDet: dtBaru)));
+                          },
+                          onLongPress: (){
+                            Database.hapusData(judulhapus: lvJudul);
+                          },
+                          title: Text(lvJudul),
+                          subtitle: Text(lvIsi),
+                        );
+                      }, 
+                      separatorBuilder: (context, index) => const SizedBox(height: 8.0,), 
+                      itemCount: snapshot.data!.docs.length
+                      );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        Colors.pinkAccent,
+                        
+                      )),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

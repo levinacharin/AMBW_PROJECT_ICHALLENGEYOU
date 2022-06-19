@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script defer src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyCVfL2hcaDk3vTO8y-0wg9vx0rwya9FhRM",
+    authDomain: "ambw-ichallengeyou.firebaseapp.com",
+    projectId: "ambw-ichallengeyou",
+    storageBucket: "ambw-ichallengeyou.appspot.com",
+    messagingSenderId: "878848525246",
+    appId: "1:878848525246:web:eda2d37f98d9d9ab5f6fef"
+````};
+    firebase.initializeApp(firebaseConfig);
+
+  </script>
   <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.

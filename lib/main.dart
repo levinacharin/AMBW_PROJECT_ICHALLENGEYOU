@@ -1,20 +1,23 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ichallengeyouapp/bmi.dart';
 import 'package:ichallengeyouapp/challenges.dart';
 // import 'package:ichallengeyouapp/firebase_options.dart';
 import 'package:ichallengeyouapp/profile.dart';
 
+import 'firebase_options.dart';
+
 // import 'dataclass.dart';
 // import 'dbservices.dart';
 // import 'detdata.dart';
 
-void main(){
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     MaterialApp(
       title: "ICHALLENGEYOU",
@@ -61,6 +64,7 @@ class _MyAppState extends State<MyApp> {
   // }
 
   // int _jumlah = 0;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,7 @@ class _MyAppState extends State<MyApp> {
       // ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          iconSize: 40,
+          iconSize: 30,
           showUnselectedLabels: false,
           currentIndex: currentIndex,
           onTap: (index) => setState(() => currentIndex = index), 
@@ -96,7 +100,7 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.checklist),
-              label: 'Challenges',
+              label: 'Challengess',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.account_box),

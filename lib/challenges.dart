@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'dataclass.dart';
+import 'dbservices.dart';
 
 class challenges extends StatefulWidget {
+  
   const challenges({ Key? key }) : super(key: key);
 
   @override
@@ -8,7 +12,15 @@ class challenges extends StatefulWidget {
 }
 
 class _challengesState extends State<challenges> {
-  final List bulan = ["Jan", "Feb","Maret", "April", "Mei", "Juni", "Juli","Agus","Sept","Okt","Nov", "Des"];
+  int _jumlah = 0;
+
+  Stream<QuerySnapshot<Object?>> onSearch(){
+    setState(() {
+      
+    });
+    return Database.getlistchallenge('levinacharin7@gmail.com');
+  }
+  //Stream<QuerySnapshot<Object?>> txtsearch = Database.getlistchallenge('levinacharin7@gmail.com');
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class _challengesState extends State<challenges> {
                         Column(
                           children: [
                             Icon(Icons.account_circle),
-                            Text("orsafioree10")
+                            Text("rosafioree10")
                           ],
                         ),
                         Column(
@@ -62,43 +74,44 @@ class _challengesState extends State<challenges> {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      itemCount: bulan.length,
-                      itemBuilder: ((context,index){
-                        return Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                          children: [
-                            Text(bulan[index], style: TextStyle(fontSize: 30),),
-
-
-                          ],
-                        ));
-                      }),
-                    )
-                  )
+                          child: StreamBuilder<QuerySnapshot>(
+                            stream: onSearch(),
+                            builder: (context,snapshot){
+                              if(snapshot.hasError){
+                                return Text('ERROR');
+                              }else if(snapshot.hasData || snapshot.data != null){
+                                return ListView.separated(
+                                  itemBuilder: (context, index){
+                                    DocumentSnapshot dsData = snapshot.data!.docs[index];
+                                    //mengambil data per index ke dalam variabel data
+                                    String c_status = dsData['status'];
+                                    //String lvIsi = dsData['isiCat'];
+                                    _jumlah = snapshot.data!.docs.length;
+                                    return ListTile(
+                                      
+                                      title: Text(c_status),
+                                      //subtitle: Text(lvIsi),
+                                    );
+                                  }, 
+                                  separatorBuilder: (context, index) => const SizedBox(height: 20.0,), 
+                                  itemCount: snapshot.data!.docs.length
+                                  );
+                              }
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.pinkAccent,
+                                    
+                                  )),
+                              );
+                            },
+                          ),
+                        ),
                   
                 ],
               )
         ),
-        // bottomNavigationBar: BottomNavigationBar(
-        //   items: [
-        //     BottomNavigationBarItem(
-        //         icon: new Icon(Icons.calculate, color:Colors.black),
-        //         //title: new Text("BMI",)
-        //     ),
-        //     BottomNavigationBarItem(
-        //         icon: new Icon(Icons.assignment, color: Colors.blue,),
-        //         //title: new Text("Challenges")
-        //     ),
-        //     BottomNavigationBarItem(
-        //         icon: new Icon(Icons.account_circle),
-        //         //title: new Text("Profile")
-        //     ),
-            
-                
-        //   ],
-        // ),
+       
       ),
     );
   }

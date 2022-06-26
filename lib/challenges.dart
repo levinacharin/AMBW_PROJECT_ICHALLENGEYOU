@@ -13,11 +13,12 @@ class _challengesState extends State<challenges> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "I Challenge You",
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("I Challenge You"),
-        ),
+        // appBar: AppBar(
+        //   title: Text("I Challenge You"),
+        // ),
         body: Container(
           child: Column(
                 children: [
@@ -80,24 +81,24 @@ class _challengesState extends State<challenges> {
                 ],
               )
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.calculate, color:Colors.black),
-                //title: new Text("BMI",)
-            ),
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.assignment, color: Colors.blue,),
-                //title: new Text("Challenges")
-            ),
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.account_circle),
-                //title: new Text("Profile")
-            ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: [
+        //     BottomNavigationBarItem(
+        //         icon: new Icon(Icons.calculate, color:Colors.black),
+        //         //title: new Text("BMI",)
+        //     ),
+        //     BottomNavigationBarItem(
+        //         icon: new Icon(Icons.assignment, color: Colors.blue,),
+        //         //title: new Text("Challenges")
+        //     ),
+        //     BottomNavigationBarItem(
+        //         icon: new Icon(Icons.account_circle),
+        //         //title: new Text("Profile")
+        //     ),
             
                 
-          ],
-        ),
+        //   ],
+        // ),
       ),
     );
   }

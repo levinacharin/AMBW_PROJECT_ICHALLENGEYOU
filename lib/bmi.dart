@@ -11,11 +11,12 @@ class _bmiState extends State<bmi> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: "I Challenge You",
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("I Challenge You"),
-        ),
+        // appBar: AppBar(
+        //   title: const Text("I Challenge You"),
+        // ),
         body: Container(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           color: Colors.orange[50],

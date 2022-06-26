@@ -1,17 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ichallengeyouapp/firebase_options.dart';
+import 'package:ichallengeyouapp/bmi.dart';
+import 'package:ichallengeyouapp/challenges.dart';
+// import 'package:ichallengeyouapp/firebase_options.dart';
+import 'package:ichallengeyouapp/profile.dart';
 
-import 'dataclass.dart';
-import 'dbservices.dart';
-import 'detdata.dart';
+// import 'dataclass.dart';
+// import 'dbservices.dart';
+// import 'detdata.dart';
 
-void main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main(){
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
   runApp(
     MaterialApp(
       title: "ICHALLENGEYOU",
@@ -28,105 +31,136 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _searchText = TextEditingController();
-  @override
-  void dispose(){
-    _searchText.dispose();
-    super.dispose();
-  }
+  // bottom navbar
+  int currentIndex = 1;
+  final screens = [
+    bmi(),
+    challenges(),
+    profiles()
+  ];
+  // end of bottom navbar
 
-  @override
-  void initState(){
-    _searchText.addListener(onSearch);
-    super.initState();
-  }
+  // final _searchText = TextEditingController();
+  // @override
+  // void dispose(){
+  //   _searchText.dispose();
+  //   super.dispose();
+  // }
 
-  Stream<QuerySnapshot<Object?>> onSearch(){
-    setState(() {
+  // @override
+  // void initState(){
+  //   _searchText.addListener(onSearch);
+  //   super.initState();
+  // }
+
+  // Stream<QuerySnapshot<Object?>> onSearch(){
+  //   setState(() {
       
-    });
-    return Database.getData(_searchText.text);
-  }
+  //   });
+  //   return Database.getData(_searchText.text);
+  // }
 
-  int _jumlah = 0;
+  // int _jumlah = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("FIREBASE CRUD"),
+        title: Text("ICHALLENGEYOU"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // _jumlah++;
-          // final dtBaru = itemCatatan(itemJudul: _jumlah.toString(), itemIisi: "33334");
-          // Database.tambahData(item: dtBaru);
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     // _jumlah++;
+      //     // final dtBaru = itemCatatan(itemJudul: _jumlah.toString(), itemIisi: "33334");
+      //     // Database.tambahData(item: dtBaru);
 
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>detData()));
-        },
-        backgroundColor: Colors.blueGrey,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 32,
-        ),
-      ),
-      body: Container(
-        margin: EdgeInsets.fromLTRB(8, 20, 8, 8),
-        child: Column(
-          children: [
-            TextField(
-              controller: _searchText,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: Colors.blue)),
-              ),
+      //     Navigator.push(context, MaterialPageRoute(builder: (context)=>detData()));
+      //   },
+      //   backgroundColor: Colors.blueGrey,
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: Colors.white,
+      //     size: 32,
+      //   ),
+      // ),
+      body: screens[currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          iconSize: 40,
+          showUnselectedLabels: false,
+          currentIndex: currentIndex,
+          onTap: (index) => setState(() => currentIndex = index), 
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calculate),
+              label: 'Calculator',
             ),
-            Expanded(
-              child: StreamBuilder<QuerySnapshot>(
-                stream: onSearch(),
-                builder: (context,snapshot){
-                  if(snapshot.hasError){
-                    return Text('ERROR');
-                  }else if(snapshot.hasData || snapshot.data != null){
-                    return ListView.separated(
-                      itemBuilder: (context, index){
-                        DocumentSnapshot dsData = snapshot.data!.docs[index];
-                        //mengambil data per index ke dalam variabel data
-                        String lvJudul = dsData['judulCat'];
-                        String lvIsi = dsData['isiCat'];
-                        _jumlah = snapshot.data!.docs.length;
-                        return ListTile(
-                          onTap: (){
-                            final dtBaru = itemCatatan(itemJudul: lvJudul, itemIisi: lvIsi);
-                            // Database.ubahData(item: dtBaru);
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>detData(dataDet: dtBaru)));
-                          },
-                          onLongPress: (){
-                            Database.hapusData(judulhapus: lvJudul);
-                          },
-                          title: Text(lvJudul),
-                          subtitle: Text(lvIsi),
-                        );
-                      }, 
-                      separatorBuilder: (context, index) => const SizedBox(height: 8.0,), 
-                      itemCount: snapshot.data!.docs.length
-                      );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.pinkAccent,
-                        
-                      )),
-                  );
-                },
-              ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.checklist),
+              label: 'Challenges',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_box),
+              label: 'Profile',
             ),
           ],
         ),
-      ),
+
+      // Container(
+      //   margin: EdgeInsets.fromLTRB(8, 20, 8, 8),
+      //   child: Column(
+      //     children: [
+      //       TextField(
+      //         controller: _searchText,
+      //         decoration: InputDecoration(
+      //           prefixIcon: Icon(Icons.search),
+      //           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+      //           borderSide: BorderSide(color: Colors.blue)),
+      //         ),
+      //       ),
+      //       Expanded(
+      //         child: StreamBuilder<QuerySnapshot>(
+      //           stream: onSearch(),
+      //           builder: (context,snapshot){
+      //             if(snapshot.hasError){
+      //               return Text('ERROR');
+      //             }else if(snapshot.hasData || snapshot.data != null){
+      //               return ListView.separated(
+      //                 itemBuilder: (context, index){
+      //                   DocumentSnapshot dsData = snapshot.data!.docs[index];
+      //                   //mengambil data per index ke dalam variabel data
+      //                   String lvJudul = dsData['judulCat'];
+      //                   String lvIsi = dsData['isiCat'];
+      //                   _jumlah = snapshot.data!.docs.length;
+      //                   return ListTile(
+      //                     onTap: (){
+      //                       final dtBaru = itemCatatan(itemJudul: lvJudul, itemIisi: lvIsi);
+      //                       // Database.ubahData(item: dtBaru);
+      //                       Navigator.push(context, MaterialPageRoute(builder: (context)=>detData(dataDet: dtBaru)));
+      //                     },
+      //                     onLongPress: (){
+      //                       Database.hapusData(judulhapus: lvJudul);
+      //                     },
+      //                     title: Text(lvJudul),
+      //                     subtitle: Text(lvIsi),
+      //                   );
+      //                 }, 
+      //                 separatorBuilder: (context, index) => const SizedBox(height: 8.0,), 
+      //                 itemCount: snapshot.data!.docs.length
+      //                 );
+      //             }
+      //             return Center(
+      //               child: CircularProgressIndicator(
+      //                 valueColor: AlwaysStoppedAnimation<Color>(
+      //                   Colors.pinkAccent,
+                        
+      //                 )),
+      //             );
+      //           },
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
     );
   }
 }

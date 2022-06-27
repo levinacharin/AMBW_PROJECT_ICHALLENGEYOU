@@ -8,6 +8,56 @@ class bmi extends StatefulWidget {
 }
 
 class _bmiState extends State<bmi> {
+  TextEditingController _tfheightController = TextEditingController();
+  TextEditingController _tfweightController = TextEditingController();
+
+  String _height = "";
+  String _weight = "";
+  double _heightinmeter = 0;
+  double _bmicalculate = 0;
+
+  String _bmiresult = "";
+  String _bmiresultdescription = "";
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _tfheightController.dispose();
+    _tfweightController.dispose();
+    super.dispose();
+  }
+
+
+  // FUNCTION
+  void calculatethebmi() {
+    _height = _tfheightController.text;
+    _weight = _tfweightController.text;
+
+    _heightinmeter = double.parse(_height) / 100;
+    _bmicalculate = double.parse(_weight);
+
+    _bmicalculate = _bmicalculate / (_heightinmeter * _heightinmeter);
+    _bmiresult = double.parse((_bmicalculate).toStringAsFixed(1)).toString();
+
+    if (_bmicalculate < 18.5) {
+      _bmiresultdescription = "Anda termasuk kategori UNDERWEIGHT \n" + 
+      "Perbanyak asupan makanan bergizi agar mencapai berat badan ideal";
+    } else if (_bmicalculate >= 18.5 && _bmicalculate <= 24.9) {
+      _bmiresultdescription = "Anda termasuk kategori NORMAL \n" + 
+      "Pertahankan berat badan ideal anda dengan makanan sehat dan olahraga";
+    } else if (_bmicalculate >= 25 && _bmicalculate <= 29.9) {
+      _bmiresultdescription = "Anda termasuk kategori OVERWEIGHT \n" + 
+      "Kurangi berat badan anda dengan berolahraga dan mengurangi asupan kalori";
+    } else if (_bmicalculate >= 30 && _bmicalculate <= 40) {
+      _bmiresultdescription = "Anda termasuk kategori OBESE \n" + 
+      "Kurangi berat badan anda dengan berolahraga dan mengurangi asupan kalori";
+    } else if (_bmicalculate > 18.5) {
+      _bmiresultdescription = "Anda termasuk kategori UNDERWEIGHT \n" + 
+      "Kurangi berat badan anda dengan berolahraga dan mengurangi asupan kalori";
+    }
+  }
+  // END OF FUNCTION
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,48 +70,59 @@ class _bmiState extends State<bmi> {
         body: Container(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           color: Colors.orange[50],
-          child: Expanded (
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    Text("I Challenge You", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-                  ],
-                ),
-                const SizedBox(height: 20,),
-                Card(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                  elevation: 10,
-                  child: Container (
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        const Text("BMI Calculator", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                        const SizedBox(height: 20,),
-                        const TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Input your height (cm)",
+          child: Wrap (
+            children: [
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: const [
+                      Text("I Challenge You", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                    ],
+                  ),
+                  const SizedBox(height: 20,),
+                  Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                    elevation: 10,
+                    child: Container (
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          const Text("BMI Calculator", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                          
+                          const SizedBox(height: 20,),
+                          
+                          TextField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Input your height (cm)",
+                            ),
+                            controller: _tfheightController,
                           ),
-                        ),
-                        const SizedBox(height: 20,),
-                        const TextField(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Input your weight (kg)",
+                          
+                          const SizedBox(height: 20,),
+                          
+                          TextField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: "Input your weight (kg)",
+                            ),
+                            controller: _tfweightController,
                           ),
-                        ),
-                        const SizedBox(height: 30,),
-                        ElevatedButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => resultBMI()));
-                        }, child: Text("calculate")),
-                      ],
+                          
+                          const SizedBox(height: 30,),
+                          
+                          ElevatedButton(onPressed: () {
+                            calculatethebmi();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => resultBMI(resultbmi: _bmiresult, resultdescription: _bmiresultdescription,)));
+                          }, child: Text("calculate")),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ),
         ),
 

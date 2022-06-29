@@ -20,6 +20,70 @@ class _challengesState extends State<challenges> {
     });
     return Database.getlistchallenge('levinacharin7@gmail.com');
   }
+
+  Widget _popupchallenge(BuildContext context, String deschallenge, String statuschallenge, String namadocumentchallenge, ) {
+  return new AlertDialog(
+    title: Text('$deschallenge'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: (){}, 
+                icon: Icon(Icons.alarm, color: Colors.red),
+                iconSize: 50,),
+              SizedBox(height: 10,),
+              Text('Set Alarm',textAlign: TextAlign.center, style: TextStyle(color: Colors.red),)
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: (){
+                  if(statuschallenge!="done"){
+                    Database.ubahData('levinacharin7@gmail.com',namadocumentchallenge);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('You Finished $deschallenge'),
+                          ),
+                        );
+                  }
+                  // else{
+                  //   Database.ubahData('levinacharin7@gmail.com',namadocumentchallenge);
+                  // }
+                }, 
+                icon: Icon(Icons.check_circle, color: Colors.green),
+                iconSize: 50,
+                ),
+              SizedBox(height: 10,),
+              Text('Done',textAlign: TextAlign.center, style: TextStyle(color: Colors.green)),
+
+            ],
+          )
+        ],)
+        
+      ],
+    ),
+    actions: <Widget>[
+      new FlatButton(
+      //ElevatedButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        textColor: Theme.of(context).primaryColor,
+        child: const Text('Close'),
+      ),
+    ],
+    
+  );
+}
   
 
   // Stream<QuerySnapshot<Object?>> detaillistchallenge(){
@@ -100,6 +164,7 @@ class _challengesState extends State<challenges> {
                                     String c_descchallenge = dsData['challengedesc'];
                                     String c_status = dsData['status'];
                                     String c_img = dsData['imgchallenge'].toString();
+                                    String c_namadoc = dsData['namadocument'].toString();
                                     _jumlah = snapshot.data!.docs.length;
                                     var coloricon = Colors.red;
                                     int stat = 0xf616;
@@ -125,6 +190,12 @@ class _challengesState extends State<challenges> {
                                         leading: CircleAvatar(
                                           backgroundImage:NetworkImage("assets/images/\$c_img.jpg"),
                                         ),
+                                        onTap: (){
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) => _popupchallenge(context,c_descchallenge,c_status,c_namadoc),
+                                          );
+                                        },
                                         title: Text(c_descchallenge),
                                         //subtitle: Text(c_status),
                                         trailing: Icon(IconData(stat, fontFamily: 'MaterialIcons'),

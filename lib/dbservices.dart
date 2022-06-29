@@ -31,6 +31,29 @@ class Database {
     
   }
 
+  //buat update
+  static Future<void> ubahData(String email, String namadocument) async{
+    //DocumentReference docRef = listuser.doc(email);
+    // await listuser.doc(email).collection("userchallenge").doc(namadocument).update({
+    //   'status':'done'
+    // }
+    // );
+
+    listuser
+      .doc(email)
+      .collection("userchallenge")
+      .doc(namadocument)
+      .update({'status':"done"})
+      .catchError((e)=> print(e));
+    
+     
+    // await docRef
+    //   .collection(userchallenge);
+    // .update(item.toJson())
+    // .whenComplete(() => print("data berhasil diubah"))
+    // .catchError((e)=> print(e));
+  }
+
 
   
 
@@ -65,14 +88,7 @@ class Database {
   //   .catchError((e) => print(e));
   // }
 
-  //buat update
-  // static Future<void> ubahData({required itemCatatan item}) async{
-  //   DocumentReference docRef = tblCatatan.doc(item.itemJudul);
-  //   await docRef
-  //   .update(item.toJson())
-  //   .whenComplete(() => print("data berhasil diubah"))
-  //   .catchError((e)=> print(e));
-  // }
+  
 
   // static Future<void> hapusData({required String judulhapus}) async{
   //   DocumentReference docRef = tblCatatan.doc(judulhapus);

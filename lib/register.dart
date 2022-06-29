@@ -1,199 +1,109 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class register extends StatefulWidget {
-  const register({ Key? key }) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<register> createState() => _registerState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _registerState extends State<register> {
+class _RegisterState extends State<Register> {
+  TextEditingController EmailController = TextEditingController();
+  TextEditingController PasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "I Challenge You",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("I Challenge You"),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Color.fromARGB(255, 207, 102, 16),
         ),
-        body: Container(
-          child: ListView(
-            children: [
-              Container(
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(112, 50, 112, 50),
-                    decoration: new BoxDecoration(
-                      color: Colors.orange[50]
-                    ),
-                    child: Text("REGISTER",
-                    style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),)
+        title: const Text(""),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Stack(
+              children: [
+                Text(
+                  "I CHALLENGE YOU",
+                  style: TextStyle(
+                      fontSize: 50,
+                      fontWeight: FontWeight.bold,
+                      foreground: Paint()
+                        ..style = PaintingStyle.stroke
+                        ..strokeWidth = 5
+                        ..color = Color.fromARGB(255, 238, 235, 233)),
+                ),
+                Text(
+                  "I CHALLENGE YOU",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 199, 117, 50),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Full Name:"), 
-                              TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.orange[50],
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-                              ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Container(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text("Birthdate:"),
-                                    Text("160401") //diganti tanggal,
-                                    
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text("Gender:"),
-                                  
-                                  Text("Female") //diganti dropdown
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Phone Number:"),
-                              //Text("089934278472874")
-                              TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.orange[50],
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Email:"),
-                              //Text("rosafioree@email.com")
-                              TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.orange[50],
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Username:"),
-                              //Text("rosafioree10")
-                              TextField(
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.orange[50],
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Password:"),
-                              //Text("buattextfield")
-                              TextField(
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.orange[50],
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Confirmation Password:"),
-                              TextField(
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.orange[50],
-                                  border: OutlineInputBorder(),
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                ),
+              ],
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: EmailController,
+                decoration: InputDecoration(
+                  labelText: "Email",
+                  labelStyle: TextStyle(
+                    color: Color.fromARGB(255, 199, 117, 50),
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                    child: 
-                    Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.check_box_outline_blank),
-                          Text("I have agree with the term of conditions")
-                        ],
-                      ),
-                      ElevatedButton(onPressed: (){}, child: Text("Register"))
-                      
-                    ],),
-                  )
-                ],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
-            )
-            ],
-          ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: TextField(
+                controller: PasswordController,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                  labelStyle: TextStyle(
+                    color: Color.fromARGB(255, 199, 117, 50),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
+      floatingActionButton: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.userChanges(),
+        builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.hasData) {
+            return const Text("");
+          } else {
+            return FloatingActionButton(
+              onPressed: () async {
+                try {
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: EmailController.text,
+                      password: PasswordController.text);
+                  Navigator.pop(context);
+                } catch (e) {
+                  print(e);
+                }
+              },
+              child: const Icon(Icons.check),
+              backgroundColor: Color.fromARGB(255, 199, 117, 50),
+            );
+          }
+        },
       ),
     );
   }

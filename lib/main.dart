@@ -4,10 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ichallengeyouapp/bmi.dart';
 import 'package:ichallengeyouapp/challenges.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:ichallengeyouapp/firebase_options.dart';
 import 'package:ichallengeyouapp/profile.dart';
+import 'package:ichallengeyouapp/register_profile.dart';
 
 import 'firebase_options.dart';
+import 'LoginMenu.dart';
 
 // import 'dataclass.dart';
 // import 'dbservices.dart';
@@ -18,12 +21,10 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(
-    MaterialApp(
-      title: "ICHALLENGEYOU",
-      home: MyApp(),
-    )
-  );
+  runApp(MaterialApp(
+    title: "ICHALLENGEYOU",
+    home: RegisterMenu(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -36,11 +37,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // bottom navbar
   int currentIndex = 1;
-  final screens = [
-    bmi(),
-    challenges(),
-    profiles()
-  ];
+  final screens = [bmi(), challenges(), profiles()];
   // end of bottom navbar
 
   // final _searchText = TextEditingController();
@@ -58,13 +55,12 @@ class _MyAppState extends State<MyApp> {
 
   // Stream<QuerySnapshot<Object?>> onSearch(){
   //   setState(() {
-      
+
   //   });
   //   return Database.getData(_searchText.text);
   // }
 
   // int _jumlah = 0;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -89,25 +85,25 @@ class _MyAppState extends State<MyApp> {
       // ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-          iconSize: 30,
-          showUnselectedLabels: false,
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index), 
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calculate),
-              label: 'Calculator',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.checklist),
-              label: 'Challengess',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_box),
-              label: 'Profile',
-            ),
-          ],
-        ),
+        iconSize: 30,
+        showUnselectedLabels: false,
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calculate),
+            label: 'Calculator',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.checklist),
+            label: 'Challengess',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_box),
+            label: 'Profile',
+          ),
+        ],
+      ),
 
       // Container(
       //   margin: EdgeInsets.fromLTRB(8, 20, 8, 8),
@@ -147,8 +143,8 @@ class _MyAppState extends State<MyApp> {
       //                     title: Text(lvJudul),
       //                     subtitle: Text(lvIsi),
       //                   );
-      //                 }, 
-      //                 separatorBuilder: (context, index) => const SizedBox(height: 8.0,), 
+      //                 },
+      //                 separatorBuilder: (context, index) => const SizedBox(height: 8.0,),
       //                 itemCount: snapshot.data!.docs.length
       //                 );
       //             }
@@ -156,7 +152,7 @@ class _MyAppState extends State<MyApp> {
       //               child: CircularProgressIndicator(
       //                 valueColor: AlwaysStoppedAnimation<Color>(
       //                   Colors.pinkAccent,
-                        
+
       //                 )),
       //             );
       //           },

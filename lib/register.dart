@@ -67,6 +67,7 @@ class _RegisterState extends State<Register> {
             Container(
               padding: EdgeInsets.all(10),
               child: TextField(
+                obscureText: true,
                 controller: PasswordController,
                 decoration: InputDecoration(
                   labelText: "Password",

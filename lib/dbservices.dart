@@ -1,9 +1,6 @@
 //import 'dart:html';
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ichallengeyouapp/dataclass.dart';
 
-import 'dbservices.dart';
 //CollectionReference tblCatatan = FirebaseFirestore.instance.collection("tblCatatan");
 CollectionReference listuser = FirebaseFirestore.instance.collection("User");
 CollectionReference listchallenge = FirebaseFirestore.instance.collection("challenges");
@@ -12,12 +9,16 @@ CollectionReference listchallenge = FirebaseFirestore.instance.collection("chall
 
 class Database {
   //baca data
-  static Stream<QuerySnapshot> getlistchallenge(String email) {
+  static Stream<QuerySnapshot> getlistchallenge(String email, String idchall) {
+   
     return listuser
-    .doc("levinacharin7@gmail.com")
+    .doc(email)
     //.where(document,isEqualTo: email)
     .collection('userchallenge')
+    .where("idchallenge",isEqualTo: idchall)
     .snapshots();
+
+    
     
     // if(email==""){
     //   return listuser.snapshots();
@@ -31,27 +32,26 @@ class Database {
     
   }
 
-  //buat update
+  //buat update klo dah di klik done
   static Future<void> ubahData(String email, String namadocument) async{
-    //DocumentReference docRef = listuser.doc(email);
-    // await listuser.doc(email).collection("userchallenge").doc(namadocument).update({
-    //   'status':'done'
-    // }
-    // );
-
     listuser
       .doc(email)
       .collection("userchallenge")
       .doc(namadocument)
       .update({'status':"done"})
       .catchError((e)=> print(e));
-    
-     
-    // await docRef
-    //   .collection(userchallenge);
-    // .update(item.toJson())
-    // .whenComplete(() => print("data berhasil diubah"))
-    // .catchError((e)=> print(e));
+   
+  }
+
+  //update ganti hari
+  static Future<void> gantihari(String email) async{
+    listuser
+      .doc(email)
+      .collection("userchallenge")
+      .doc()
+      .update({'status':"notyet"})
+      .catchError((e)=> print(e));
+   
   }
 
 

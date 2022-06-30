@@ -33,6 +33,7 @@ dependencies:
   firebase_core: ^1.18.0
   flutter:
     sdk: flutter
+  flutter_alarm_clock: ^0.0.2
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -51,6 +52,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/bmi_table.jpg
+    - assets/images/imgc_eating.jpg
+    - assets/images/imgc_drinking.jpg
+    - assets/images/imgc_movie.jpg
+    - assets/images/imgc_running.jpg
+    - assets/images/imgc_reading.jpg
     - assets/background/bg1.png
     - assets/background/bg2.png
     - assets/background/bg3.png

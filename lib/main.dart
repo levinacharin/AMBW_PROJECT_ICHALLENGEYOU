@@ -5,12 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:ichallengeyouapp/LoginMenu.dart';
 import 'package:ichallengeyouapp/bmi.dart';
 import 'package:ichallengeyouapp/challenges.dart';
-<<<<<<< Updated upstream
-=======
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:ichallengeyouapp/login.dart';
-// import 'package:ichallengeyouapp/firebase_options.dart';
->>>>>>> Stashed changes
 import 'package:ichallengeyouapp/profile.dart';
 import 'firebase_options.dart';
 

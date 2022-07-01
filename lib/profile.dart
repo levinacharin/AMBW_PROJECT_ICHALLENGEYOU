@@ -9,7 +9,7 @@ import 'package:ichallengeyouapp/dbservices.dart';
 import 'package:ichallengeyouapp/notifservices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ichallengeyouapp/edit_profiledart';
+import 'package:ichallengeyouapp/edit_profile.dart';
 
 class profiles extends StatefulWidget {
   const profiles({Key? key}) : super(key: key);

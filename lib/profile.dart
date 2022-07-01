@@ -32,12 +32,14 @@ class _profilesState extends State<profiles> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Profile',
       home: Scaffold(
         body: Container(
           padding: EdgeInsets.all(10.0),
+          color: Colors.orange[50],
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FutureBuilder<DocumentSnapshot>(
                 future: FirebaseFirestore.instance
@@ -49,36 +51,64 @@ class _profilesState extends State<profiles> {
                     Map<String?, dynamic> data =
                         snapshot.data!.data() as Map<String?, dynamic>;
                     return Container(
-                      padding: EdgeInsets.all(20),
-                      margin: EdgeInsets.fromLTRB(50, 5, 50, 5),
+                      padding: EdgeInsets.fromLTRB(16, 16, 16, 5),
                       width: double.infinity,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
                         children: [
-                          Column(
+                          Text("I Challenge You", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+                          const SizedBox(height: 10,),
+                          Wrap(
                             children: [
-                              Text("FULL Name   : ",
-                                  style: TextStyle(fontSize: 20)),
-                              Text("Birthdate   : ",
-                                  style: TextStyle(fontSize: 20)),
-                              Text("Phonenumber : ",
-                                  style: TextStyle(fontSize: 20)),
-                              Text("Username    : ",
-                                  style: TextStyle(fontSize: 20))
+                              Column(
+                                children: [
+                                  Card(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                    elevation: 10,
+                                    child: Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Row(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: const [
+                                              Text("Full Name        : ",
+                                                  style: TextStyle(fontSize: 20)),
+                                              SizedBox(height: 10,),
+                                              Text("Birthdate          : ",
+                                                  style: TextStyle(fontSize: 20)),
+                                              SizedBox(height: 10,),
+                                              Text("Phonenumber : ",
+                                                  style: TextStyle(fontSize: 20)),
+                                              SizedBox(height: 10,),
+                                              Text("Username        : ",
+                                                  style: TextStyle(fontSize: 20))
+                                            ],
+                                          ),
+                                          const SizedBox(width: 5,),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text("${data['fullname']}",
+                                                  style: TextStyle(fontSize: 20)),
+                                              const SizedBox(height: 10,),
+                                              Text("${data['birthdate']}",
+                                                  style: TextStyle(fontSize: 20)),
+                                              const SizedBox(height: 10,),
+                                              Text("${data['phonenumber]']}",
+                                                  style: TextStyle(fontSize: 20)),
+                                              const SizedBox(height: 10,),
+                                              Text("${data['username']}",
+                                                  style: TextStyle(fontSize: 20)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
-                          Column(
-                            children: [
-                              Text("${data['fullname']}",
-                                  style: TextStyle(fontSize: 20)),
-                              Text("${data['birthdate']}",
-                                  style: TextStyle(fontSize: 20)),
-                              Text("${data['phoneNumber']}",
-                                  style: TextStyle(fontSize: 20)),
-                              Text("${data['username']}",
-                                  style: TextStyle(fontSize: 20)),
-                            ],
-                          )
                         ],
                       ),
                     );
@@ -87,21 +117,30 @@ class _profilesState extends State<profiles> {
                   }
                 },
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    await service.showNotification(
-                        id: 0,
-                        title: 'Notification Title',
-                        body: 'NotificationB Body');
-                  },
-                  child: Text("Show Notifikasi")),
-              ElevatedButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginMenu()));
-                  },
-                  child: Icon(Icons.logout)),
+              
+            const SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    const Text("Notification Quotes", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () async {
+                          await service.showDailyNotification(
+                              id: 0,
+                              title: 'Notification Title',
+                              body: 'NotificationB Body');
+                        },
+                        child: Text("Show Notifikasi")),
+                  ],
+                ),
+              ],
+            ),
             ],
           ),
         ),

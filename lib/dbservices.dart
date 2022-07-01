@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 CollectionReference listuser = FirebaseFirestore.instance.collection("User");
 CollectionReference listchallenge =
     FirebaseFirestore.instance.collection("challenges");
+CollectionReference listquotes = FirebaseFirestore.instance.collection("Quotes");
 //DocumentReference
 
 class Database {

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:ichallengeyouapp/main.dart';
 import 'dbservices.dart';
 
-class RegisterMenu extends StatefulWidget {
-  const RegisterMenu({Key? key}) : super(key: key);
+class ProfileEdit extends StatefulWidget {
+  const ProfileEdit({Key? key}) : super(key: key);
 
   @override
-  State<RegisterMenu> createState() => _RegisterMenuState();
+  State<ProfileEdit> createState() => _ProfileEditState();
 }
 
-class _RegisterMenuState extends State<RegisterMenu> {
+class _ProfileEditState extends State<ProfileEdit> {
   DateTime _dateTime = DateTime.now();
   TextEditingController nameController = TextEditingController();
   TextEditingController birthdateController = TextEditingController();
@@ -18,15 +18,6 @@ class _RegisterMenuState extends State<RegisterMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          iconTheme: IconThemeData(
-            color: Color.fromARGB(255, 207, 102, 16),
-          ),
-          title: const Text(""),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
         body: Center(
           child: Column(
             children: [
@@ -70,6 +61,12 @@ class _RegisterMenuState extends State<RegisterMenu> {
               Container(
                 margin: EdgeInsets.all(10),
                 padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

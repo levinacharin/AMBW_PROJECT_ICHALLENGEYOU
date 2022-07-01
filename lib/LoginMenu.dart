@@ -18,11 +18,6 @@ class _LoginMenuState extends State<LoginMenu> {
       home: Container(
         child: Scaffold(
           // backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            title: const Text(""),
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-          ),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -38,6 +33,7 @@ class _LoginMenuState extends State<LoginMenu> {
                     children: [
                       Text(
                         "I CHALLENGE YOU",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
@@ -48,6 +44,7 @@ class _LoginMenuState extends State<LoginMenu> {
                       ),
                       Text(
                         "I CHALLENGE YOU",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 50,
                           fontWeight: FontWeight.bold,
@@ -56,26 +53,46 @@ class _LoginMenuState extends State<LoginMenu> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 30),
                   ElevatedButton(
-                    child: const Text("Login"),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 199, 117, 50),
+                      onPrimary: Color.fromARGB(255, 239, 153, 83),
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      child: const Text(
+                        "Register",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Login(),
+                          builder: (context) => Register(),
                         ),
                       );
                     },
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    child: const Text("Register"),
+                    child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 199, 117, 50),
+                      onPrimary: Color.fromARGB(255, 239, 153, 83),
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Register(),
+                          builder: (context) => Login(),
                         ),
                       );
                     },

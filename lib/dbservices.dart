@@ -22,7 +22,6 @@ class Database {
         .where("idchallenge", isEqualTo: idchall)
         .snapshots();
 
-    
     // if(email==""){
     //   return listuser.snapshots();
     // }else{
@@ -171,4 +170,37 @@ Future<void> inputUserChallenge(dataChallenges challenges) async {
       .doc(data['namadocument'].toString())
       .set(data);
   return;
+}
+
+Future<String> GetUsername() async {
+  String username = "";
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  FirebaseFirestore.instance
+      .collection('User')
+      .doc(auth.currentUser!.email.toString())
+      .get()
+      .then((value) {
+    username = value.get('username');
+  });
+  return username;
+}
+
+void GetUserData() {
+  Map<String?, dynamic> data = {};
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  FirebaseFirestore.instance
+      .collection('User')
+      .doc(auth.currentUser!.email.toString())
+      .get()
+      .then((value) {
+    data = {
+      'fullname': value.get('fullname'),
+      'Username': value.get('username'),
+      'phonenumber': value.get('phoneNumber'),
+      'Birthdate': value.get('birthdate'),
+    };
+    print(data);
+  });
 }

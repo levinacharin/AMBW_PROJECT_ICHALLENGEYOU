@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ichallengeyouapp/dbservices.dart';
 import 'package:ichallengeyouapp/notifservices.dart';
 
 class profiles extends StatefulWidget {
@@ -32,16 +33,84 @@ class _profilesState extends State<profiles> {
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: [
-              ElevatedButton(
-                onPressed: () async {
-                  await service.showNotification(
-                    id: 0, 
-                    title: 'Notification Title', 
-                    body: 'NotificationB Body'
-                  );
-                }, 
-                child: Text("Show Notifikasi")
-              ),
+              // Row(
+              //   children: [
+              //     Column(
+              //       children: [
+              //         Text(
+              //           "Name: ",
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         Text(
+              //           "Birthdate: ",
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         Text(
+              //           "Phone Number: ",
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         Text(
+              //           "Email: ",
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     Column(
+              //       children: [
+              //         Text(
+              //           data['name'],
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         Text(
+              //           data['birthdate'],
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         Text(
+              //           data['phone'],
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //         Text(
+              //           data['email'],
+              //           style: TextStyle(
+              //             fontSize: 20,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // )
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     await service.showNotification(
+              //       id: 0,
+              //       title: 'Notification Title',
+              //       body: 'NotificationB Body'
+              //     );
+              //   },
+              //   child: Text("Show Notifikasi")
+              // ),
             ],
           ),
         ),

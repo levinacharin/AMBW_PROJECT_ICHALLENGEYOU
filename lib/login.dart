@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ichallengeyouapp/main.dart';
+import 'package:ichallengeyouapp/register.dart';
 import 'package:ichallengeyouapp/register_profile.dart';
+import 'package:ichallengeyouapp/dbservices.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -86,6 +88,7 @@ class _LoginState extends State<Login> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          GetUserData();
           FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: EmailController.text,
@@ -94,7 +97,7 @@ class _LoginState extends State<Login> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RegisterMenu(),
+                builder: (context) => MyApp(),
               ),
             );
           }).catchError((e) {

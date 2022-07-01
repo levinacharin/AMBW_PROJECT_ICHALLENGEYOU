@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ichallengeyouapp/main.dart';
+import 'package:ichallengeyouapp/register_profile.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -86,7 +88,20 @@ class _RegisterState extends State<Register> {
         stream: FirebaseAuth.instance.userChanges(),
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.hasData) {
-            return const Text("");
+            return FloatingActionButton(
+              onPressed: () async {
+                try {
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: EmailController.text,
+                      password: PasswordController.text);
+                  Navigator.pop(context);
+                } catch (e) {
+                  print(e);
+                }
+              },
+              child: const Icon(Icons.check),
+              backgroundColor: Color.fromARGB(255, 199, 117, 50),
+            );
           } else {
             return FloatingActionButton(
               onPressed: () async {

@@ -14,7 +14,6 @@ final String uid = auth.currentUser!.uid.toString();
 //late int idchallengeygdigunakan = 2;
 
 Future<void> main() async {
-  
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -34,18 +33,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  
   int currentIndex = 1;
-  final screens = [bmi(), challenges(idchallenge: idchallengeygdigunakan, emaill: auth.currentUser!.email.toString()), profiles()];
-
- 
+  final screens = [
+    bmi(),
+    challenges(
+        idchallenge: idchallengeygdigunakan,
+        emaill: auth.currentUser!.email.toString()),
+    profiles()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("ICHALLENGEYOU"),
       ),
-      
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         iconSize: 30,
@@ -67,7 +68,6 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-
     );
   }
 }

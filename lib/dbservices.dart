@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 CollectionReference listuser = FirebaseFirestore.instance.collection("User");
 CollectionReference listchallenge =
     FirebaseFirestore.instance.collection("challenges");
+CollectionReference listquotes = FirebaseFirestore.instance.collection("Quotes");
 //DocumentReference
 
 class Database {
@@ -195,4 +196,18 @@ Future<Map<String?, dynamic>> getUserData() async {
     };
   });
   return userData;
+}
+
+Future<String> getLastLogin() async {
+  String lastLogin = "";
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  FirebaseFirestore.instance
+      .collection('User')
+      .doc(auth.currentUser!.email.toString())
+      .get()
+      .then((value) {
+    lastLogin = value.get('lastLogin');
+  });
+  return lastLogin;
 }

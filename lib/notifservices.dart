@@ -53,14 +53,20 @@ class LocalNotificationServices {
   }
   
 
-  // show normal notification
-  Future<void> showNotification({
+  // show daily notification
+  Future<void> showDailyNotification({
     required int id,
     required String title,
     required String body,
   }) async {
     final details = await _notificationDetails();
-    await _localNotificationService.show(id, title, body, details);
+    await _localNotificationService.periodicallyShow(
+      id, 
+      title, 
+      body, 
+      RepeatInterval.daily,
+      details
+    );
   }
 
   Future<void> cancelAllNotifications() async {

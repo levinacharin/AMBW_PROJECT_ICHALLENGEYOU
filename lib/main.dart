@@ -37,7 +37,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Stream<bool>? _controller;
   String _message = EVENT_MESSAGE_DEFAULT;
 
@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    print(currentDate);
   }
 
   @override
@@ -61,12 +62,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed && Platform.isAndroid || 
-      state == AppLifecycleState.paused && Platform.isAndroid || 
-      state == AppLifecycleState.detached && Platform.isAndroid) {
+    if (state == AppLifecycleState.resumed && Platform.isAndroid ||
+        state == AppLifecycleState.paused && Platform.isAndroid ||
+        state == AppLifecycleState.detached && Platform.isAndroid) {
       _initWatcher();
     }
-    
   }
 
   _initWatcher() {
@@ -76,8 +76,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
       setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
       print(_message);
     },
-      onError: (error) => print('$ERROR: $error'),
-      onDone: () => print(STREAM_COMPLETE));
+        onError: (error) => print('$ERROR: $error'),
+        onDone: () => print(STREAM_COMPLETE));
 
     // CONDITIONAL DETECT GANTI HARI
     if (currentDate.day == 5) {
@@ -92,15 +92,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
     // if (currentDate.hour == 00 && currentDate.minute >= 01) {
     //   statusText = "no reset";
     // }
+    if (currentDate.hour == 00) {
+      idchallengeygdigunakan = 2;
+      statusText = "reset";
+      print("${DateTime.now()}");
+    }
   }
-  
 
   int currentIndex = 1;
   final screens = [
     bmi(),
     challenges(
-        idchallenge: idstring,
-        emaill: auth.currentUser!.email.toString()),
+        idchallenge: idstring, emaill: auth.currentUser!.email.toString()),
     profiles()
   ];
   @override
@@ -115,7 +118,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
         showUnselectedLabels: false,
         currentIndex: currentIndex,
         onTap: (index) => setState(() => currentIndex = index),
-        items:  [
+        items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.calculate),
             label: 'Calculator',

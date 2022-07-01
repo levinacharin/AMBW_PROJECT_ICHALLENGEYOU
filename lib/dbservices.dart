@@ -21,33 +21,23 @@ class Database {
         .where("idchallenge", isEqualTo: idchall)
         .snapshots();
 
-    // if(email==""){
-    //   return listuser.snapshots();
-    // }else{
-    //   return listuser
-    //   .listchallenge
-    //   //.orderBy("judulCat")
-    //   //.startAt([judul]).endAt([judul+'\uf8ff'])
-    //   .snapshots();
-    // }
   }
 
-  // //healthscore
-  // static String gethealthscore(String email, String idchall, String namadocumenths) {
-  //   String hscore='0';
-  //   listuser.doc(email).get().then((snapshot) {
-  //     hscore = snapshot.data['specie'].toString();
-  //   });
+  // static String getfield(String email, String idchall) {
+  //   String nama='levina';
   //   listuser
   //       .doc(email)
   //       .get()
-  //       .then((snapshot){
-  //         hscore=snapshot.data[].toString();
-  //       });
-    
-  //  return hscore;
+  //       .then((data){
+  //         nama = data.birthdate;
+  //       })
+  //   nama = li
+  //   return nama;
+
   // }
 
+
+  
   //buat update klo dah di klik done
   static Future<void> ubahData(String email, String namadocument) async {
     listuser
@@ -75,44 +65,6 @@ class Database {
         .update({'status': "notyet"}).catchError((e) => print(e));
   }
 
-  // static Stream<QuerySnapshot> getdetailchallenge(String email) {
-  //   //Stream<QuerySnapshot<Object?>> listchalname = Database.getlistchallenge('levinacharin7@gmail.com');
-
-  //   return listuser
-  //   .doc("levinacharin7@gmail.com")
-  //   //.where(document,isEqualTo: email)
-  //   .collection('userchallenge')
-  //   .snapshots();
-
-  //   // if(email==""){
-  //   //   return listuser.snapshots();
-  //   // }else{
-  //   //   return listuser
-  //   //   .listchallenge
-  //   //   //.orderBy("judulCat")
-  //   //   //.startAt([judul]).endAt([judul+'\uf8ff'])
-  //   //   .snapshots();
-  //   // }
-
-  // }
-
-  //add data
-  // static Future<void> tambahData({required itemCatatan item}) async {
-  //   DocumentReference docRef = tblCatatan.doc(item.itemJudul);
-
-  //   await docRef
-  //   .set(item.toJson())
-  //   .whenComplete(() => print("data berhasil diinput"))
-  //   .catchError((e) => print(e));
-  // }
-
-  // static Future<void> hapusData({required String judulhapus}) async{
-  //   DocumentReference docRef = tblCatatan.doc(judulhapus);
-  //   await docRef
-  //   .delete()
-  //   .whenComplete(() => print("data berhasil dihapus"))
-  //   .catchError((e)=>print(e));
-  // }
 }
 
 Future<void> registerUser(String? name, String? birthdate, String? phoneNumber,

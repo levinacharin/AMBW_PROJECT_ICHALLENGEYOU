@@ -12,7 +12,8 @@ import 'firebase_options.dart';
 import 'package:time_change_detector/time_change_detector.dart';
 import 'package:ichallengeyouapp/definit.dart';
 
-int idchallengeygdigunakan = Random().nextInt(1) + 1;
+int idchallengeygdigunakan = 1;
+String idstring = idchallengeygdigunakan.toString();
 final FirebaseAuth auth = FirebaseAuth.instance;
 final String uid = auth.currentUser!.uid.toString();
 //late int idchallengeygdigunakan = 2;
@@ -65,11 +66,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
       state == AppLifecycleState.detached && Platform.isAndroid) {
       _initWatcher();
     }
+    
   }
 
   _initWatcher() {
     _controller ??= TimeChangeDetector.init;
-    print(_message);
+    print('mess123:$_message');
     _subscription = _controller!.listen((event) {
       setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
       print(_message);
@@ -78,20 +80,26 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
       onDone: () => print(STREAM_COMPLETE));
 
     // CONDITIONAL DETECT GANTI HARI
-    if (currentDate.hour == 00) {
-      statusText = "reset";
+    if (currentDate.day == 5) {
+      //idchallengeygdigunakan = Random().nextInt(1) + 1;
+      // idchallengeygdigunakan = 2;
+      // statusText = "reset";
+      // print('reset:$statusText');
+      idchallengeygdigunakan = 2;
+      idstring = idchallengeygdigunakan.toString();
     }
 
-    if (currentDate.hour == 00 && currentDate.minute >= 01) {
-      statusText = "no reset";
-    }
+    // if (currentDate.hour == 00 && currentDate.minute >= 01) {
+    //   statusText = "no reset";
+    // }
   }
+  
 
   int currentIndex = 1;
   final screens = [
     bmi(),
     challenges(
-        idchallenge: idchallengeygdigunakan,
+        idchallenge: idstring,
         emaill: auth.currentUser!.email.toString()),
     profiles()
   ];
@@ -99,7 +107,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("ICHALLENGEYOU"),
+        title: Text("${currentDate.day}"),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -107,7 +115,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
         showUnselectedLabels: false,
         currentIndex: currentIndex,
         onTap: (index) => setState(() => currentIndex = index),
-        items: const [
+        items:  [
           BottomNavigationBarItem(
             icon: Icon(Icons.calculate),
             label: 'Calculator',
@@ -119,7 +127,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
             label: 'Profile',
-          ),
+          )
         ],
       ),
     );

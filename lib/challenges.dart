@@ -1,14 +1,22 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ichallengeyouapp/main.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:time_change_detector/time_change_detector.dart';
 import 'dbservices.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 
+import 'definit.dart';
+
 double _healthScore = 0;
+//int randomid = Random().nextInt(1) + 1;
+//int randomid = 1;
 
 class challenges extends StatefulWidget {
-  final int idchallenge;
+  final String idchallenge;
   final String emaill;
   
   const challenges({Key? key, required this.idchallenge,required this.emaill}) : super(key: key);
@@ -17,7 +25,65 @@ class challenges extends StatefulWidget {
   State<challenges> createState() => _challengesState();
 }
 
-class _challengesState extends State<challenges> {
+class _challengesState extends State<challenges>with WidgetsBindingObserver{
+  Stream<bool>? _controller;
+  String _message = EVENT_MESSAGE_DEFAULT;
+  //String idcelensneh=randomid.toString();
+  
+
+  late StreamSubscription _subscription;
+
+  DateTime currentDate = DateTime.now();
+  String statusText = 'no reset';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed || 
+      state == AppLifecycleState.paused|| 
+      state == AppLifecycleState.detached) {
+      _initWatcher();
+    }
+  }
+
+  _initWatcher() {
+    _controller ??= TimeChangeDetector.init;
+    print('mess123:$_message');
+    _subscription = _controller!.listen((event) {
+      setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
+      print(_message);
+    },
+      onError: (error) => print('$ERROR: $error'),
+      onDone: () => print(STREAM_COMPLETE));
+
+    // CONDITIONAL DETECT GANTI HARI
+    if (currentDate.day == 5) {
+      //idchallengeygdigunakan = Random().nextInt(1) + 1;
+      //idcelensneh=2;
+      // randomid=2;
+      // idcelensneh='2';
+      //idchallengeygdigunakan = 2;
+      statusText = "reset";
+      print('reset:$statusText');
+    }
+
+    // if (currentDate.hour == 00 && currentDate.minute >= 01) {
+    //   statusText = "no reset";
+    // }
+  }
+  
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   int _jumlah = 0;
@@ -25,7 +91,8 @@ class _challengesState extends State<challenges> {
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
     return Database.getlistchallenge(
-        widget.emaill, widget.idchallenge.toString());
+        //widget.emaill, widget.idchallenge.toString());
+        widget.emaill, widget.idchallenge);
   }
 
   Widget alarmlay(BuildContext context, String desc_challenge) {
@@ -225,10 +292,10 @@ class _challengesState extends State<challenges> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Column(
-                        children: const [
+                        children:  [
                           Icon(Icons.account_circle),
                           SizedBox(height: 5,),
-                          Text("rosafioree10")
+                          Text("${currentDate.day}")
                         ],
                       ),
                       Column(

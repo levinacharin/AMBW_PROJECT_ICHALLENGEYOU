@@ -1,7 +1,6 @@
 //import 'dart:html';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,6 +31,22 @@ class Database {
     //   .snapshots();
     // }
   }
+
+  // //healthscore
+  // static String gethealthscore(String email, String idchall, String namadocumenths) {
+  //   String hscore='0';
+  //   listuser.doc(email).get().then((snapshot) {
+  //     hscore = snapshot.data['specie'].toString();
+  //   });
+  //   listuser
+  //       .doc(email)
+  //       .get()
+  //       .then((snapshot){
+  //         hscore=snapshot.data[].toString();
+  //       });
+    
+  //  return hscore;
+  // }
 
   //buat update klo dah di klik done
   static Future<void> ubahData(String email, String namadocument) async {

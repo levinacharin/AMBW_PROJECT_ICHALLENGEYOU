@@ -19,17 +19,6 @@ class Database {
     .snapshots();
 
     
-    
-    // if(email==""){
-    //   return listuser.snapshots();
-    // }else{
-    //   return listuser
-    //   .listchallenge
-    //   //.orderBy("judulCat")
-    //   //.startAt([judul]).endAt([judul+'\uf8ff'])
-    //   .snapshots();
-    // }
-    
   }
 
   //buat update klo dah di klik done

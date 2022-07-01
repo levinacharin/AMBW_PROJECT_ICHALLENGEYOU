@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dbservices.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 
 class challenges extends StatefulWidget {
   final int idchallenge;
   final String emaill;
-  
   
   const challenges({Key? key, required this.idchallenge,required this.emaill}) : super(key: key);
 
@@ -19,6 +19,7 @@ class _challengesState extends State<challenges> {
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   int _jumlah = 0;
+  double _healthScore = 0.0;
 
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
@@ -148,10 +149,10 @@ class _challengesState extends State<challenges> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () {
+                    onPressed: () { 
                       if (statuschallenge != "done") {
                         Database.ubahData(
-                            'levinacharin7@gmail.com', namadocumentchallenge);
+                            'felicialaksana@gmail.com', namadocumentchallenge);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('You Finished $deschallenge'),
@@ -202,40 +203,56 @@ class _challengesState extends State<challenges> {
             child: Column(
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(20, 20, 20, 50),
-                    // decoration: new BoxDecoration(
-                    //   color: Colors.orange[50]
-                    // ),
-                    child: Text(
-                      "I Challenge You",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    )),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  // decoration: new BoxDecoration(
+                  //   color: Colors.orange[50]
+                  // ),
+                  child: const Text(
+                    "I Challenge You",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  )
+                ),
+                // LinearPercentIndicator(
+                //   animation: true,
+                //   animationDuration: 1000,
+                //   lineHeight: 20,
+                //   width: 150,
+                //   percent: 0.4,
+                //   barRadius: const Radius.circular(16),
+                //   progressColor: Colors.green,
+                //   backgroundColor: Colors.green.shade100,
+                // ),
                 Container(
-                  padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                   decoration: new BoxDecoration(color: Colors.orange[100]),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Column(
-                        children: [
+                        children: const [
                           Icon(Icons.account_circle),
+                          SizedBox(height: 5,),
                           Text("rosafioree10")
                         ],
                       ),
                       Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Health Status"),
-                          Row(
-                            children: [],
+                          const Text("Health Status", style: TextStyle(fontWeight: FontWeight.bold),),
+                          const SizedBox(height: 5,),
+                          LinearPercentIndicator(
+                            animation: true,
+                            animationDuration: 1000,
+                            lineHeight: 15,
+                            width: 150,
+                            percent: _healthScore,
+                            barRadius: const Radius.circular(16),
+                            progressColor: Colors.green,
+                            backgroundColor: Colors.green.shade100,
                           ),
-                          Text("Happiness"),
-                          Row(
-                            children: [],
-                          )
                         ],
-                      )
+                      ),
+                      
                     ],
                   ),
                 ),

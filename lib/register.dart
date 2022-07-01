@@ -14,7 +14,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: Color.fromARGB(255, 207, 102, 16),

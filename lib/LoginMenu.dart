@@ -22,7 +22,7 @@ class _LoginMenuState extends State<LoginMenu> {
           ),
         ),
         child: Scaffold(
-          backgroundColor: Colors.transparent,
+          // backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: const Text(""),
             backgroundColor: Colors.transparent,

@@ -19,7 +19,7 @@ class _challengesState extends State<challenges> {
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   int _jumlah = 0;
-  double _healthScore = 0.0;
+  double _healthScore = 0;
 
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
@@ -213,16 +213,6 @@ class _challengesState extends State<challenges> {
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   )
                 ),
-                // LinearPercentIndicator(
-                //   animation: true,
-                //   animationDuration: 1000,
-                //   lineHeight: 20,
-                //   width: 150,
-                //   percent: 0.4,
-                //   barRadius: const Radius.circular(16),
-                //   progressColor: Colors.green,
-                //   backgroundColor: Colors.green.shade100,
-                // ),
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                   decoration: new BoxDecoration(color: Colors.orange[100]),
@@ -241,8 +231,8 @@ class _challengesState extends State<challenges> {
                           const Text("Health Status", style: TextStyle(fontWeight: FontWeight.bold),),
                           const SizedBox(height: 5,),
                           LinearPercentIndicator(
-                            animation: true,
-                            animationDuration: 1000,
+                            // animation: true,
+                            // animationDuration: 1000,
                             lineHeight: 15,
                             width: 150,
                             percent: _healthScore,
@@ -278,6 +268,7 @@ class _challengesState extends State<challenges> {
                               if (c_status == "done") {
                                 stat = 0xf635;
                                 coloricon = Colors.green;
+                                changeHealthScore();
                               }
 
                               return Card(
@@ -328,5 +319,9 @@ class _challengesState extends State<challenges> {
             )),
       ),
     );
+  }
+  
+  void changeHealthScore() {
+    _healthScore += 0.2;
   }
 }

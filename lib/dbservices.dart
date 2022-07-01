@@ -10,7 +10,6 @@ CollectionReference listchallenge = FirebaseFirestore.instance.collection("chall
 class Database {
   //baca data
   static Stream<QuerySnapshot> getlistchallenge(String email, String idchall) {
-   
     return listuser
     .doc(email)
     //.where(document,isEqualTo: email)
@@ -40,7 +39,6 @@ class Database {
       .doc(namadocument)
       .update({'status':"done"})
       .catchError((e)=> print(e));
-   
   }
 
   //update ganti hari
@@ -51,7 +49,6 @@ class Database {
       .doc()
       .update({'status':"notyet"})
       .catchError((e)=> print(e));
-   
   }
 
 

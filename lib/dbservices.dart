@@ -162,21 +162,24 @@ Future<String> GetUsername() async {
   return username;
 }
 
-void GetUserData() {
-  Map<String?, dynamic> data = {};
+Future<Map<String?, dynamic>> getUserData() async {
+  Map<String?, dynamic> userData = {};
   final FirebaseAuth auth = FirebaseAuth.instance;
   final String uid = auth.currentUser!.uid.toString();
-  FirebaseFirestore.instance
+  await FirebaseFirestore.instance
       .collection('User')
       .doc(auth.currentUser!.email.toString())
       .get()
       .then((value) {
-    data = {
+    userData = {
       'fullname': value.get('fullname'),
-      'Username': value.get('username'),
-      'phonenumber': value.get('phoneNumber'),
-      'Birthdate': value.get('birthdate'),
+      'health': value.get('health'),
+      'email': value.get('email'),
+      'birthdate': value.get('birthdate'),
+      'phoneNumber': value.get('phoneNumber'),
+      'statusNotification': value.get('statusNotification'),
+      'username': value.get('username'),
     };
-    print(data);
   });
+  return userData;
 }

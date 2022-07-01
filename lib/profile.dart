@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ichallengeyouapp/dbservices.dart';
 import 'package:ichallengeyouapp/notifservices.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class profiles extends StatefulWidget {
   const profiles({Key? key}) : super(key: key);
@@ -26,91 +30,60 @@ class _profilesState extends State<profiles> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Profile',
       home: Scaffold(
         body: Container(
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: [
-              // Row(
-              //   children: [
-              //     Column(
-              //       children: [
-              //         Text(
-              //           "Name: ",
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //         Text(
-              //           "Birthdate: ",
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //         Text(
-              //           "Phone Number: ",
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //         Text(
-              //           "Email: ",
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //     Column(
-              //       children: [
-              //         Text(
-              //           data['name'],
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //         Text(
-              //           data['birthdate'],
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //         Text(
-              //           data['phone'],
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //         Text(
-              //           data['email'],
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // )
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     await service.showNotification(
-              //       id: 0,
-              //       title: 'Notification Title',
-              //       body: 'NotificationB Body'
-              //     );
-              //   },
-              //   child: Text("Show Notifikasi")
-              // ),
+              FutureBuilder<DocumentSnapshot>(
+                future: FirebaseFirestore.instance
+                    .collection('User')
+                    .doc(FirebaseAuth.instance.currentUser!.email)
+                    .get(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    Map<String?, dynamic> data =
+                        snapshot.data!.data() as Map<String?, dynamic>;
+                    return Row(
+                      children: [
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  '${data['fullname']}',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  } else {
+                    return Text('Loading...');
+                  }
+                },
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    await service.showNotification(
+                        id: 0,
+                        title: 'Notification Title',
+                        body: 'NotificationB Body');
+                  },
+                  child: Text("Show Notifikasi")),
             ],
           ),
         ),

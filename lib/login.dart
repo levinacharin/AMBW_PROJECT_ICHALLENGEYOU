@@ -88,7 +88,6 @@ class _LoginState extends State<Login> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GetUserData();
           FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: EmailController.text,

@@ -18,6 +18,18 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< Updated upstream
+=======
+        // backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: Color.fromARGB(255, 207, 102, 16),
+          ),
+          title: const Text(""),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+>>>>>>> Stashed changes
         body: Center(
           child: Column(
             children: [

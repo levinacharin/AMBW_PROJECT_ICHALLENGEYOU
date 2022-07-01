@@ -42,6 +42,15 @@ class Database {
         .update({'status': "done"}).catchError((e) => print(e));
   }
 
+  // health score
+  static Future<void> ubahDataHealthScore(String email, String namadocument, String healthscore) async {
+    listuser
+        .doc(email)
+        .collection("userchallenge")
+        .doc(namadocument)
+        .update({'health': healthscore}).catchError((e) => print(e));
+  }
+
   //update ganti hari
   static Future<void> gantihari(String email) async {
     listuser

@@ -5,6 +5,8 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'dbservices.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 
+double _healthScore = 0;
+
 class challenges extends StatefulWidget {
   final int idchallenge;
   final String emaill;
@@ -19,7 +21,6 @@ class _challengesState extends State<challenges> {
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   int _jumlah = 0;
-  double _healthScore = 0;
 
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
@@ -98,12 +99,12 @@ class _challengesState extends State<challenges> {
         ),
       ]),
       actions: <Widget>[
-        new FlatButton(
+        new ElevatedButton(
           //ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
+          // textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
       ],
@@ -152,13 +153,17 @@ class _challengesState extends State<challenges> {
                     onPressed: () { 
                       if (statuschallenge != "done") {
                         Database.ubahData(
-                            'felicialaksana@gmail.com', namadocumentchallenge);
+                            widget.emaill, namadocumentchallenge);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('You Finished $deschallenge'),
                           ),
                         );
                       }
+                      _healthScore += 0.2;
+                      Database.ubahDataHealthScore(
+                        widget.emaill, namadocumentchallenge, _healthScore.toString());
+                      // print(_healthScore);
                       Navigator.of(context).pop();
                       // else{
                       //   Database.ubahData('levinacharin7@gmail.com',namadocumentchallenge);
@@ -180,12 +185,12 @@ class _challengesState extends State<challenges> {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        new ElevatedButton(
           //ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
+          // textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
       ],
@@ -230,15 +235,36 @@ class _challengesState extends State<challenges> {
                         children: [
                           const Text("Health Status", style: TextStyle(fontWeight: FontWeight.bold),),
                           const SizedBox(height: 5,),
-                          LinearPercentIndicator(
-                            // animation: true,
-                            // animationDuration: 1000,
-                            lineHeight: 15,
-                            width: 150,
-                            percent: _healthScore,
-                            barRadius: const Radius.circular(16),
-                            progressColor: Colors.green,
-                            backgroundColor: Colors.green.shade100,
+                          StreamBuilder<QuerySnapshot>(
+                            stream: listchallengeuser(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('ERROR');
+                              }else if (snapshot.hasData || snapshot.data != null) {
+                                return LinearPercentIndicator(
+                                  // animation: true,
+                                  // animationDuration: 1000,
+                                  lineHeight: 15,
+                                  width: 150,
+                                  percent: _healthScore,
+                                  center: Text(
+                                    '${_healthScore*100}',
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)
+                                  ),
+                                  barRadius: const Radius.circular(16),
+                                  progressColor: Colors.green,
+                                  backgroundColor: Colors.green.shade100,
+                                );
+                              }
+
+                              return Center(
+                                child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.pinkAccent,
+                                )
+                              ),
+                              );
+                            },
                           ),
                         ],
                       ),
@@ -268,7 +294,7 @@ class _challengesState extends State<challenges> {
                               if (c_status == "done") {
                                 stat = 0xf635;
                                 coloricon = Colors.green;
-                                changeHealthScore();
+                                // _healthScore += 0.2;
                               }
 
                               return Card(
@@ -321,7 +347,4 @@ class _challengesState extends State<challenges> {
     );
   }
   
-  void changeHealthScore() {
-    _healthScore += 0.2;
-  }
 }

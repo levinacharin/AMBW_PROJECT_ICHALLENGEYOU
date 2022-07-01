@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:ichallengeyouapp/LoginMenu.dart';
 import 'package:ichallengeyouapp/dbservices.dart';
 import 'package:ichallengeyouapp/notifservices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,6 +95,13 @@ class _profilesState extends State<profiles> {
                         body: 'NotificationB Body');
                   },
                   child: Text("Show Notifikasi")),
+              ElevatedButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginMenu()));
+                  },
+                  child: Icon(Icons.logout)),
             ],
           ),
         ),

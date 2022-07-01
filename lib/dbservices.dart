@@ -22,6 +22,7 @@ class Database {
         .where("idchallenge", isEqualTo: idchall)
         .snapshots();
 
+    
     // if(email==""){
     //   return listuser.snapshots();
     // }else{

@@ -94,7 +94,12 @@ class _RegisterState extends State<Register> {
                   await FirebaseAuth.instance.createUserWithEmailAndPassword(
                       email: EmailController.text,
                       password: PasswordController.text);
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileEdit(),
+                    ),
+                  );
                 } catch (e) {
                   print(e);
                 }
@@ -109,7 +114,12 @@ class _RegisterState extends State<Register> {
                   await FirebaseAuth.instance.createUserWithEmailAndPassword(
                       email: EmailController.text,
                       password: PasswordController.text);
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfileEdit(),
+                    ),
+                  );
                 } catch (e) {
                   print(e);
                 }

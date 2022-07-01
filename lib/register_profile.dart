@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ichallengeyouapp/LoginMenu.dart';
+import 'package:ichallengeyouapp/login.dart';
 import 'package:ichallengeyouapp/main.dart';
 import 'dbservices.dart';
 
@@ -143,7 +145,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 PhoneNumberController.text,
                 UserController.text);
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyApp()));
+                context, MaterialPageRoute(builder: (context) => LoginMenu()));
           },
           child: Icon(Icons.arrow_forward),
           backgroundColor: Color.fromARGB(255, 199, 117, 50),

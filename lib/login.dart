@@ -98,7 +98,7 @@ class _LoginState extends State<Login> {
             FirebaseFirestore.instance
                 .collection('User')
                 .doc(FirebaseAuth.instance.currentUser!.email)
-                .set({
+                .update({
               "lastLogin": date.day.toString(),
             });
             Navigator.push(

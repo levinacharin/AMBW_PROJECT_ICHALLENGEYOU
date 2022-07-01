@@ -73,7 +73,7 @@ class _profilesState extends State<profiles> {
                                   style: TextStyle(fontSize: 20)),
                               Text("${data['birthdate']}",
                                   style: TextStyle(fontSize: 20)),
-                              Text("${data['phonenumber]']}",
+                              Text("${data['phoneNumber']}",
                                   style: TextStyle(fontSize: 20)),
                               Text("${data['username']}",
                                   style: TextStyle(fontSize: 20)),

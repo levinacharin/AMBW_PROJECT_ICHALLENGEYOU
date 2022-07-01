@@ -8,6 +8,7 @@ import 'package:ichallengeyouapp/LoginMenu.dart';
 import 'package:ichallengeyouapp/bmi.dart';
 import 'package:ichallengeyouapp/challenges.dart';
 import 'package:ichallengeyouapp/profile.dart';
+import 'dbservices.dart';
 import 'firebase_options.dart';
 import 'package:time_change_detector/time_change_detector.dart';
 import 'package:ichallengeyouapp/definit.dart';
@@ -20,6 +21,8 @@ final String uid = auth.currentUser!.uid.toString();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //getLastLogin();
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -46,6 +49,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   DateTime currentDate = DateTime.now();
   String statusText = 'no reset';
 
+  
+  String idcelens(){
+    int idchallengeygdigunakan = 1;
+    String idstring = idchallengeygdigunakan.toString();
+    int selisih = 0;
+    int llogin = getLastLogin() as int;
+    selisih = llogin - int.parse(currentDate.day.toString());
+    if(selisih!=0){
+      idchallengeygdigunakan = 2;
+      idstring = idchallengeygdigunakan.toString();
+    }
+    return idstring;
+  }
+  
+  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -65,49 +84,67 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed && Platform.isAndroid ||
         state == AppLifecycleState.paused && Platform.isAndroid ||
         state == AppLifecycleState.detached && Platform.isAndroid) {
-      _initWatcher();
+      //_initWatcher();
     }
   }
 
-  _initWatcher() {
-    _controller ??= TimeChangeDetector.init;
-    print('mess123:$_message');
-    _subscription = _controller!.listen((event) {
-      setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
-      print(_message);
-    },
-        onError: (error) => print('$ERROR: $error'),
-        onDone: () => print(STREAM_COMPLETE));
+  // _initWatcher() {
+  //   _controller ??= TimeChangeDetector.init;
+  //   print('mess123:$_message');
+  //   _subscription = _controller!.listen((event) {
+  //     setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
+  //     print(_message);
+  //   },
+  //       onError: (error) => print('$ERROR: $error'),
+  //       onDone: () => print(STREAM_COMPLETE));
 
-    // CONDITIONAL DETECT GANTI HARI
-    if (currentDate.day == 5) {
-      //idchallengeygdigunakan = Random().nextInt(1) + 1;
-      // idchallengeygdigunakan = 2;
-      // statusText = "reset";
-      // print('reset:$statusText');
-      idchallengeygdigunakan = 2;
-      idstring = idchallengeygdigunakan.toString();
-    }
+  //   // CONDITIONAL DETECT GANTI HARI
+  //   // if (currentDate.day == 5) {
+  //   //   //idchallengeygdigunakan = Random().nextInt(1) + 1;
+  //   //   // idchallengeygdigunakan = 2;
+  //   //   // statusText = "reset";
+  //   //   // print('reset:$statusText');
+  //   //   idchallengeygdigunakan = 2;
+  //   //   idstring = idchallengeygdigunakan.toString();
+  //   // }
 
-    // if (currentDate.hour == 00 && currentDate.minute >= 01) {
-    //   statusText = "no reset";
-    // }
-    if (currentDate.hour == 00) {
-      idchallengeygdigunakan = 2;
-      statusText = "reset";
-      print("${DateTime.now()}");
-    }
-  }
+  //   // // if (currentDate.hour == 00 && currentDate.minute >= 01) {
+  //   // //   statusText = "no reset";
+  //   // // }
+  //   // if (currentDate.hour == 00) {
+  //   //   idchallengeygdigunakan = 2;
+  //   //   statusText = "reset";
+  //   //   print("${DateTime.now()}");
+  //   // }
+
+  //   // if(hitung()!=0){
+  //   //   idchallengeygdigunakan = 2;
+  //   //   idstring = idchallengeygdigunakan.toString();
+  //   // }
+  // }
+
+  //getLastLogin();
+  
+  // final int selisih = 0;
+  // int llogin = getLastLogin() as int;
+  // selisih = llogin-currentDate.day;
 
   int currentIndex = 1;
-  final screens = [
-    bmi(),
-    challenges(
-        idchallenge: idstring, emaill: auth.currentUser!.email.toString()),
-    profiles()
-  ];
+  //String ehm = idcelens();
+  // final screens = [
+  //   bmi(),
+  //   challenges(
+  //       idchallenge: idcelens(), emaill: auth.currentUser!.email.toString()),
+  //   profiles()
+  // ];
   @override
   Widget build(BuildContext context) {
+      final screens = [
+      bmi(),
+      challenges(
+          idchallenge: idcelens(), emaill: auth.currentUser!.email.toString()),
+      profiles()
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text("${currentDate.day}"),

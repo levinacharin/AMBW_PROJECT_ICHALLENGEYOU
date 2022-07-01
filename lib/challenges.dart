@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ichallengeyouapp/main.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -18,8 +19,9 @@ double _healthScore = 0;
 class challenges extends StatefulWidget {
   final String idchallenge;
   final String emaill;
-  
-  const challenges({Key? key, required this.idchallenge,required this.emaill}) : super(key: key);
+
+  const challenges({Key? key, required this.idchallenge, required this.emaill})
+      : super(key: key);
 
   @override
   State<challenges> createState() => _challengesState();
@@ -178,7 +180,8 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
     );
   }
 
-  Widget _popupChallenge(BuildContext context, String deschallenge,String statuschallenge, String namadocumentchallenge) {
+  Widget _popupChallenge(BuildContext context, String deschallenge,
+      String statuschallenge, String namadocumentchallenge) {
     return new AlertDialog(
       title: Text('$deschallenge'),
       content: new Column(
@@ -217,10 +220,9 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    onPressed: () { 
+                    onPressed: () {
                       if (statuschallenge != "done") {
-                        Database.ubahData(
-                            widget.emaill, namadocumentchallenge);
+                        Database.ubahData(widget.emaill, namadocumentchallenge);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text('You Finished $deschallenge'),
@@ -228,8 +230,8 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
                         );
                       }
                       _healthScore += 0.2;
-                      Database.ubahDataHealthScore(
-                        widget.emaill, namadocumentchallenge, _healthScore.toString());
+                      Database.ubahDataHealthScore(widget.emaill,
+                          namadocumentchallenge, _healthScore.toString());
                       // print(_healthScore);
                       Navigator.of(context).pop();
                       // else{
@@ -275,49 +277,76 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                  // decoration: new BoxDecoration(
-                  //   color: Colors.orange[50]
-                  // ),
-                  child: const Text(
-                    "I Challenge You",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  )
-                ),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                    // decoration: new BoxDecoration(
+                    //   color: Colors.orange[50]
+                    // ),
+                    child: const Text(
+                      "I Challenge You",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )),
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                   decoration: new BoxDecoration(color: Colors.orange[100]),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Column(
-                        children:  [
-                          Icon(Icons.account_circle),
-                          SizedBox(height: 5,),
-                          Text("${currentDate.day}")
-                        ],
+                      FutureBuilder<DocumentSnapshot>(
+                        future: FirebaseFirestore.instance
+                            .collection('User')
+                            .doc(FirebaseAuth.instance.currentUser!.email)
+                            .get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            Map<String?, dynamic> data =
+                                snapshot.data!.data() as Map<String?, dynamic>;
+                            return Column(
+                              children: [
+                                Icon(Icons.account_circle),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  '${data['username']}',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                )
+                              ],
+                            );
+                          } else {
+                            return Text('Loading...');
+                          }
+                        },
                       ),
                       Column(
                         children: [
-                          const Text("Health Status", style: TextStyle(fontWeight: FontWeight.bold),),
-                          const SizedBox(height: 5,),
+                          const Text(
+                            "Health Status",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           StreamBuilder<QuerySnapshot>(
                             stream: listchallengeuser(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
                                 return Text('ERROR');
-                              }else if (snapshot.hasData || snapshot.data != null) {
+                              } else if (snapshot.hasData ||
+                                  snapshot.data != null) {
                                 return LinearPercentIndicator(
                                   // animation: true,
                                   // animationDuration: 1000,
                                   lineHeight: 15,
                                   width: 150,
                                   percent: _healthScore,
-                                  center: Text(
-                                    '${_healthScore*100}',
-                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black)
-                                  ),
+                                  center: Text('${_healthScore * 100}',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black)),
                                   barRadius: const Radius.circular(16),
                                   progressColor: Colors.green,
                                   backgroundColor: Colors.green.shade100,
@@ -328,14 +357,12 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
                                 child: CircularProgressIndicator(
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                   Colors.pinkAccent,
-                                )
-                              ),
+                                )),
                               );
                             },
                           ),
                         ],
                       ),
-                      
                     ],
                   ),
                 ),
@@ -354,7 +381,8 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
                               String c_descchallenge = dsData['challengedesc'];
                               String c_status = dsData['status'];
                               String c_img = dsData['imgchallenge'].toString();
-                              String c_namadoc = dsData['namadocument'].toString();
+                              String c_namadoc =
+                                  dsData['namadocument'].toString();
                               _jumlah = snapshot.data!.docs.length;
                               var coloricon = Colors.red;
                               int stat = 0xf616;
@@ -373,7 +401,8 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
                                 elevation: 5,
                                 child: ListTile(
                                     leading: CircleAvatar(
-                                      backgroundImage: AssetImage("assets/images/$c_img.jpg"),
+                                      backgroundImage: AssetImage(
+                                          "assets/images/$c_img.jpg"),
                                     ),
                                     onTap: () {
                                       showDialog(
@@ -413,5 +442,4 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
       ),
     );
   }
-  
 }

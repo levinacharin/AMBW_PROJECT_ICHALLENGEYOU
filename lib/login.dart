@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ichallengeyouapp/main.dart';
@@ -88,12 +89,18 @@ class _LoginState extends State<Login> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          GetUserData();
+          DateTime date = DateTime.now();
           FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: EmailController.text,
                   password: PasswordController.text)
               .then((user) {
+            FirebaseFirestore.instance
+                .collection('User')
+                .doc(FirebaseAuth.instance.currentUser!.email)
+                .set({
+              "lastLogin": date.day.toString(),
+            });
             Navigator.push(
               context,
               MaterialPageRoute(

@@ -20,7 +20,6 @@ class Database {
         .collection('userchallenge')
         .where("idchallenge", isEqualTo: idchall)
         .snapshots();
-
   }
 
   // static String getfield(String email, String idchall) {
@@ -36,8 +35,6 @@ class Database {
 
   // }
 
-
-  
   //buat update klo dah di klik done
   static Future<void> ubahData(String email, String namadocument) async {
     listuser
@@ -48,7 +45,8 @@ class Database {
   }
 
   // health score
-  static Future<void> ubahDataHealthScore(String email, String namadocument, String healthscore) async {
+  static Future<void> ubahDataHealthScore(
+      String email, String namadocument, String healthscore) async {
     listuser
         .doc(email)
         .collection("userchallenge")
@@ -64,7 +62,6 @@ class Database {
         .doc()
         .update({'status': "notyet"}).catchError((e) => print(e));
   }
-
 }
 
 Future<void> registerUser(String? name, String? birthdate, String? phoneNumber,
@@ -84,6 +81,22 @@ Future<void> registerUser(String? name, String? birthdate, String? phoneNumber,
     'username': username,
   });
   inputuserChallengesfromchallenge();
+  return;
+}
+
+Future<void> editProfileUser(String? name, String? birthdate,
+    String? phoneNumber, String? username) async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  FirebaseFirestore.instance
+      .collection('User')
+      .doc(auth.currentUser!.email.toString())
+      .update({
+    'fullname': name,
+    'birthdate': birthdate,
+    'phoneNumber': phoneNumber,
+    'username': username,
+  });
   return;
 }
 
@@ -162,21 +175,24 @@ Future<String> GetUsername() async {
   return username;
 }
 
-void GetUserData() {
-  Map<String?, dynamic> data = {};
+Future<Map<String?, dynamic>> getUserData() async {
+  Map<String?, dynamic> userData = {};
   final FirebaseAuth auth = FirebaseAuth.instance;
   final String uid = auth.currentUser!.uid.toString();
-  FirebaseFirestore.instance
+  await FirebaseFirestore.instance
       .collection('User')
       .doc(auth.currentUser!.email.toString())
       .get()
       .then((value) {
-    data = {
+    userData = {
       'fullname': value.get('fullname'),
-      'Username': value.get('username'),
-      'phonenumber': value.get('phoneNumber'),
-      'Birthdate': value.get('birthdate'),
+      'health': value.get('health'),
+      'email': value.get('email'),
+      'birthdate': value.get('birthdate'),
+      'phoneNumber': value.get('phoneNumber'),
+      'statusNotification': value.get('statusNotification'),
+      'username': value.get('username'),
     };
-    print(data);
   });
+  return userData;
 }

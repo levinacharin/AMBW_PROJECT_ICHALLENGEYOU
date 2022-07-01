@@ -197,3 +197,17 @@ Future<Map<String?, dynamic>> getUserData() async {
   });
   return userData;
 }
+
+Future<String> getLastLogin() async {
+  String lastLogin = "";
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  FirebaseFirestore.instance
+      .collection('User')
+      .doc(auth.currentUser!.email.toString())
+      .get()
+      .then((value) {
+    lastLogin = value.get('lastLogin');
+  });
+  return lastLogin;
+}

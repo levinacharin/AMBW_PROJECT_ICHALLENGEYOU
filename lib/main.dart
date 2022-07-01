@@ -107,6 +107,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
 >>>>>>> Stashed changes
   }
   
+  
 
   int currentIndex = 1;
   final screens = [

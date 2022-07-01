@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ichallengeyouapp/main.dart';
+import 'package:ichallengeyouapp/register_profile.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MyApp(),
+                builder: (context) => RegisterMenu(),
               ),
             );
           }).catchError((e) {

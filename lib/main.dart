@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +9,8 @@ import 'package:ichallengeyouapp/bmi.dart';
 import 'package:ichallengeyouapp/challenges.dart';
 import 'package:ichallengeyouapp/profile.dart';
 import 'firebase_options.dart';
+import 'package:time_change_detector/time_change_detector.dart';
+import 'package:ichallengeyouapp/definit.dart';
 
 int idchallengeygdigunakan = Random().nextInt(1) + 1;
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -32,7 +36,57 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver{
+  Stream<bool>? _controller;
+  String _message = EVENT_MESSAGE_DEFAULT;
+
+  late StreamSubscription _subscription;
+
+  DateTime currentDate = DateTime.now();
+  String statusText = 'no reset';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed && Platform.isAndroid || 
+      state == AppLifecycleState.paused && Platform.isAndroid || 
+      state == AppLifecycleState.detached && Platform.isAndroid) {
+      _initWatcher();
+    }
+  }
+
+  _initWatcher() {
+    _controller ??= TimeChangeDetector.init;
+    print(_message);
+    _subscription = _controller!.listen((event) {
+      setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
+      print(_message);
+    },
+      onError: (error) => print('$ERROR: $error'),
+      onDone: () => print(STREAM_COMPLETE));
+
+    // CONDITIONAL DETECT GANTI HARI
+    if (currentDate.hour == 00) {
+      statusText = "reset";
+    }
+
+    if (currentDate.hour == 00 && currentDate.minute >= 01) {
+      statusText = "no reset";
+    }
+  }
+
   int currentIndex = 1;
   final screens = [
     bmi(),

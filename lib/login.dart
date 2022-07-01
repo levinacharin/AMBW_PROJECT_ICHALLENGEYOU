@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ichallengeyouapp/main.dart';
+import 'package:ichallengeyouapp/register_profile.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       appBar: AppBar(
         iconTheme: IconThemeData(
           color: Color.fromARGB(255, 207, 102, 16),
@@ -93,7 +94,7 @@ class _LoginState extends State<Login> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => MyApp(),
+                builder: (context) => RegisterMenu(),
               ),
             );
           }).catchError((e) {

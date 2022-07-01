@@ -171,5 +171,3 @@ Future<void> inputUserChallenge(dataChallenges challenges) async {
       .set(data);
   return;
 }
-
-Future<void> getUseremail() async {}

@@ -55,14 +55,14 @@ class Database {
         .update({'health': healthscore}).catchError((e) => print(e));
   }
 
-  //update ganti hari
-  static Future<void> gantihari(String email) async {
-    listuser
-        .doc(email)
-        .collection("userchallenge")
-        .doc()
-        .update({'status': "notyet"}).catchError((e) => print(e));
-  }
+  // //update ganti hari
+  // static Future<void> gantihari(String email) async {
+  //   listuser
+  //       .doc(email)
+  //       .collection("userchallenge")
+  //       .doc()
+  //       .update({'status': "notyet"}).catchError((e) => print(e));
+  // }
 }
 
 Future<void> registerUser(String? name, String? birthdate, String? phoneNumber,

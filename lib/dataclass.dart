@@ -34,6 +34,36 @@ class itemChallenge{
 }
 
 
+class itemHistory {
+  final String itemIdhistory;
+  final String itemvaluehistory;
+  final String itemheight;
+  final String itemweight;
+
+  itemHistory({required this.itemIdhistory, required this.itemvaluehistory,
+    required this.itemheight, required this.itemweight});
+
+  // to json
+  Map<String, dynamic> toJson() {
+    return {
+      "idhistory" : itemIdhistory,
+      "valuehistory" : itemvaluehistory,
+      "heightbmi" : itemheight,
+      "weightbmi" : itemweight
+    };
+  }
+
+   // from json
+  factory itemHistory.fromJson(Map<String, dynamic> json ) {
+    return itemHistory(
+      itemIdhistory: json['idhistory'], 
+      itemvaluehistory: json['valuehistory'],
+      itemheight: json['heightbmi'],
+      itemweight: json['weightbmi']
+    );
+  }
+}
+
 class itemQuotes {
   final String itemId;
   final String itemvalue;

@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ichallengeyouapp/dataclass.dart';
 import 'package:ichallengeyouapp/resultbmi.dart';
+import 'package:ichallengeyouapp/dbservices.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class bmi extends StatefulWidget {
+
   const bmi({ Key? key }) : super(key: key);
 
   @override
@@ -18,6 +24,14 @@ class _bmiState extends State<bmi> {
 
   String _bmiresult = "";
   String _bmiresultdescription = "";
+
+  int jumlahHistory = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -70,60 +84,104 @@ class _bmiState extends State<bmi> {
         body: Container(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
           color: Colors.orange[50],
-          child: Wrap (
-            children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      Text("I Challenge You", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  const SizedBox(height: 20,),
-                  Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-                    elevation: 10,
-                    child: Container (
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          const Text("BMI Calculator", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                          
-                          const SizedBox(height: 20,),
-                          
-                          TextField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Input your height (cm)",
-                            ),
-                            controller: _tfheightController,
+          child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: const [
+                    Text("I Challenge You", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+                  ],
+                ),
+                const SizedBox(height: 20,),
+                Card(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+                  elevation: 10,
+                  child: Container (
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        const Text("BMI Calculator", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                        
+                        const SizedBox(height: 20,),
+                        
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Input your height (cm)",
                           ),
-                          
-                          const SizedBox(height: 20,),
-                          
-                          TextField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Input your weight (kg)",
-                            ),
-                            controller: _tfweightController,
+                          controller: _tfheightController,
+                        ),
+                        
+                        const SizedBox(height: 20,),
+                        
+                        TextField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Input your weight (kg)",
                           ),
-                          
-                          const SizedBox(height: 30,),
-                          
-                          ElevatedButton(onPressed: () {
-                            calculatethebmi();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => resultBMI(resultbmi: _bmiresult, resultdescription: _bmiresultdescription,)));
-                          }, child: Text("calculate")),
-                        ],
-                      ),
+                          controller: _tfweightController,
+                        ),
+                        
+                        const SizedBox(height: 30,),
+                        
+                        ElevatedButton(onPressed: () {
+                          calculatethebmi();
+                          jumlahHistory++;
+                          final dHBaru = itemHistory(itemIdhistory: jumlahHistory.toString(), itemvaluehistory: _bmiresult, itemheight: _tfheightController.text, itemweight: _tfweightController.text);
+                          Database.addDataHistory(itemH: dHBaru);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => resultBMI(resultbmi: _bmiresult, resultdescription: _bmiresultdescription,)));
+                        }, child: const Text("calculate")),
+
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              
+
+                const SizedBox(height: 10,),
+                Expanded (
+                  child: StreamBuilder<QuerySnapshot> (
+                      stream: Database.getDataHistory(),
+                      builder: ((context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text("Error");
+                        } else if (snapshot.hasData || snapshot.data != null) {
+                          return ListView.separated(
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot historyData = snapshot.data!.docs[index];
+                              String lvHeight = historyData['heightbmi'];
+                              String lvWeight = historyData['weightbmi'];
+                              String lvhistoryvalue = historyData['valuehistory'];
+                              jumlahHistory = snapshot.data!.docs.length;
+                              return Container(
+                                padding: EdgeInsets.only(bottom: 20),
+                                child: Column(
+                                  children: [
+                                    Text("Height : $lvHeight", style: const TextStyle(fontSize: 16),),
+                                    Text("Weight : $lvWeight", style: const TextStyle(fontSize: 16)),
+                                    Text("BMI     : $lvhistoryvalue", style: const TextStyle(fontSize: 16)),
+                                  ],
+                                ),
+                              );
+                            }, 
+                            separatorBuilder: (context, index) => const SizedBox(height: 10,), 
+                            itemCount: snapshot.data!.docs.length,
+                          );
+                        }
+                
+                        return const Center(
+                          child : CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color> (
+                              Colors.pinkAccent,
+                            ),
+                          )
+                        );
+                        
+                      }),
+                    ),
+                ),
+              ],
+            ),
         ),
 
 

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:ichallengeyouapp/dataclass.dart';
 
 //CollectionReference tblCatatan = FirebaseFirestore.instance.collection("tblCatatan");
 CollectionReference listuser = FirebaseFirestore.instance.collection("User");
@@ -11,6 +12,8 @@ CollectionReference listchallenge =
     FirebaseFirestore.instance.collection("challenges");
 CollectionReference listquotes =
     FirebaseFirestore.instance.collection("Quotes");
+CollectionReference listhistory = 
+  FirebaseFirestore.instance.collection("History");
 //DocumentReference
 
 class Database {
@@ -41,6 +44,11 @@ class Database {
   // baca data quotes
   static Stream<QuerySnapshot> getlistquotes(String idquotes) {
     return listquotes.where("idQuotes", isEqualTo: idquotes).snapshots();
+  }
+
+  // baca list history
+  static Stream<QuerySnapshot> getDataHistory() {
+    return listhistory.snapshots();
   }
 
   // static String getfield(String email, String idchall) {
@@ -91,6 +99,19 @@ class Database {
   //       .collection("userchallenge")
   //       .doc()
   //       .update({'status': "notyet"}).catchError((e) => print(e));
+  // }
+
+  static Future<void> addDataHistory({required itemHistory itemH}) async {
+    DocumentReference docRef = listhistory.doc(itemH.itemIdhistory);
+
+    await docRef
+      .set(itemH.toJson())
+      .whenComplete(() => print("data berhasil diiput"))
+      .catchError((e) => print(e));
+  }
+
+  // Stream<QuerySnapshot> getDataHistory() {
+  //   return listhistory.snapshots();
   // }
 }
 

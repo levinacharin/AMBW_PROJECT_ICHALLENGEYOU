@@ -49,18 +49,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   DateTime currentDate = DateTime.now();
   String statusText = 'no reset';
 
-  // Future<String> idcelens() async {
-  //   int idchallengeygdigunakan = 1;
-  //   String idstring = idchallengeygdigunakan.toString();
-  //   DateTime datenow = new DateTime.now();
-  //   int selisih = 0;
-  //   String llogin = await getLastLogin();
-  //   selisih = int.parse(llogin) - int.parse(datenow.day.toString());
-  //   if (selisih != 0) {
-  //     idstring = datenow.day.toString();
-  //   }
-  //   return idstring;
-  // }
+  
+  String idcelens(){
+    int idchallengeygdigunakan = 1;
+    String idstring = idchallengeygdigunakan.toString();
+    int selisih = 0;
+    // int llogin = getLastLogin() as int;
+    // selisih = llogin - int.parse(currentDate.day.toString());
+    if(selisih!=0){
+      idchallengeygdigunakan = 2;
+      idstring = idchallengeygdigunakan.toString();
+    }
+    return idstring;
+  }
+  
+  
 
   @override
   void initState() {

@@ -15,6 +15,20 @@ CollectionReference listquotes = FirebaseFirestore.instance.collection("Quotes")
 class Database {
   //baca data
   static Stream<QuerySnapshot> getlistchallenge(String email, String idchall) {
+    //int angkallogin=0;
+    // String lastLogin = "";
+    // FirebaseFirestore.instance
+    //     .collection('User')
+    //     .doc(email)
+    //     .get()
+    //     .then((value) {
+    //   lastLogin = value.get('lastLogin');
+    //   //angkallogin=int.parse(lastLogin);
+    //   //print(value.get('lastLogin'));
+    // });
+    // if(lastLogin!=idchall){
+    //   idchall
+    // }
     return listuser
         .doc(email)
         //.where(document,isEqualTo: email)
@@ -60,6 +74,15 @@ class Database {
         .collection("userchallenge")
         .doc(namadocument)
         .update({'health': healthscore}).catchError((e) => print(e));
+  }
+
+  static Future<void> ubahstatusallnotyet(
+      String email) async {
+    listuser
+        .doc(email)
+        .collection("userchallenge")
+        .doc()
+        .update({'status': "notyet"}).catchError((e) => print(e));
   }
 
   // //update ganti hari

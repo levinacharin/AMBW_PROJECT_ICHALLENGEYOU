@@ -26,6 +26,13 @@ class challenges extends StatefulWidget {
 }
 
 class _challengesState extends State<challenges>with WidgetsBindingObserver{
+  Stream<bool>? _controller;
+  String _message = EVENT_MESSAGE_DEFAULT;
+
+  late StreamSubscription _subscription;
+
+  DateTime currentDate = DateTime.now();
+  String statusText = 'no reset';
   
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
@@ -33,6 +40,9 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
 //@override
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
+    // if(currentDate.day!=widget.idchallenge){
+    //   Database.ubahstatusallnotyet(widget.emaill);
+    // }
     return Database.getlistchallenge(
         //widget.emaill, widget.idchallenge.toString());
         widget.emaill, widget.idchallenge);

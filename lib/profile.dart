@@ -26,18 +26,12 @@ class _profilesState extends State<profiles> {
   String? idquotesnotif;
   String? valuequotesnotif;
   List<String> quotesnotif = [];
-  int randomindex = Random().nextInt(5) + 1;
-
   @override
   void initState() {
     // TODO: implement initState
     service = LocalNotificationServices();
     service.initialize();
     super.initState();
-  }
-
-  void addtoquotes() async {
-    quotesnotif = await getQuotes();
   }
 
   @override
@@ -207,7 +201,12 @@ class _profilesState extends State<profiles> {
                       // ),
                       ElevatedButton(
                           onPressed: () async {
-                            randomIndexQuotes();
+                            quotesnotif = await getQuotes();
+                            print(quotesnotif);
+
+                            int randomindex =
+                                Random().nextInt(quotesnotif.length);
+                            print(quotesnotif[randomindex]);
                             // StreamBuilder<QuerySnapshot>(
                             //   stream: searchQuotes(),
                             //   builder: (context, snapshot) {
@@ -264,13 +263,10 @@ class _profilesState extends State<profiles> {
     );
   }
 
-  void randomIndexQuotes() {
-    Random randomquotes = Random();
-    _randomindex = randomquotes.nextInt(4);
-  }
-
-  Stream<QuerySnapshot<Object?>> searchQuotes() {
-    setState(() {});
-    return Database.getlistquotes((_randomindex + 1).toString());
-  }
+  // String randomquote() {
+  //   addtoquotes();
+  //   int randomindex = Random().nextInt(quotesnotif.length);
+  //   print(quotesnotif[randomindex]);
+  //   return quotesnotif[randomindex];
+  // }
 }

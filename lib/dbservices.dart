@@ -255,14 +255,23 @@ Future<bool> getLastLogin() async {
 Future<void> ubahstatusallnotyet(String? email) async {
   if (await getLastLogin() == true) {
     print('masuk ubah status');
-    listuser
-        .doc(email)
-        .collection("userchallenge")
-        .get().then((value){
-          value.docs.forEach((element) {
-            element.reference.update({'status':"notyet"});
-          });
-        });
-        //.update({'status': "notyet"}).catchError((e) => print(e));
+    listuser.doc(email).collection("userchallenge").get().then((value) {
+      value.docs.forEach((element) {
+        element.reference.update({'status': "notyet"});
+      });
+    });
+    //.update({'status': "notyet"}).catchError((e) => print(e));
   }
+}
+
+Future<List<String>> getQuotes() async {
+  List<String> quotes = [];
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  await FirebaseFirestore.instance.collection('Quotes').get().then((value) {
+    value.docs.forEach((element) {
+      quotes.add(element.get('value').toString());
+    });
+  });
+  return quotes;
 }

@@ -97,7 +97,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final screens = [
       bmi(),
-      challenges(idchallenge: currentDate.day.toString(), emaill: auth.currentUser!.email.toString()),
+      challenges(
+          idchallenge: currentDate.day.toString(),
+          emaill: auth.currentUser!.email.toString()),
       profiles()
     ];
     return Scaffold(

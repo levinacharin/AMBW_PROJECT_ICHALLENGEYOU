@@ -25,7 +25,7 @@ class challenges extends StatefulWidget {
   State<challenges> createState() => _challengesState();
 }
 
-class _challengesState extends State<challenges>with WidgetsBindingObserver{
+class _challengesState extends State<challenges> with WidgetsBindingObserver {
   Stream<bool>? _controller;
   String _message = EVENT_MESSAGE_DEFAULT;
 
@@ -33,7 +33,7 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
 
   DateTime currentDate = DateTime.now();
   String statusText = 'no reset';
-  
+
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   int _jumlah = 0;
@@ -43,7 +43,9 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
     ubahstatusallnotyet(auth.currentUser!.email);
     
     return Database.getlistchallenge(
-        widget.emaill, widget.idchallenge);
+        //widget.emaill, widget.idchallenge.toString());
+        widget.emaill,
+        widget.idchallenge);
   }
 
   Widget alarmlay(BuildContext context, String desc_challenge) {

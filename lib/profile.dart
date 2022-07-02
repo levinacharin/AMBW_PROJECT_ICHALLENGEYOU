@@ -133,31 +133,59 @@ class _profilesState extends State<profiles> {
                 ),
                 Column(
                   children: [
+                    // FutureBuilder<DocumentSnapshot>(
+                    //   future: 
+                    //     FirebaseFirestore.instance
+                    //       .collection('Quotes')
+                    //       .get()
+                    //       .then((value) {
+                    //         value.docs.forEach((element) {
+                              
+                    //         });
+                    //       }),
+                    //   builder: (context, snapshot) {
+                    //     if (snapshot.hasData) {
+                    //       Map<String?, dynamic> data =
+                    //           snapshot.data!.data() as Map<String?, dynamic>;
+                    //       return Container(
+                    //         padding: EdgeInsets.fromLTRB(16, 16, 16, 5),
+                    //         width: double.infinity,
+                    //         child: Column(
+                    //           children: [
+                              
+                    //           ],
+                    //         ),
+                    //       );
+                    //     } else {
+                    //       return Text('Loading...');
+                    //     }
+                    //   },
+                    // ),
                     ElevatedButton(
                       onPressed: () async {
                         randomIndexQuotes();
-                        StreamBuilder<QuerySnapshot>(
-                          stream: searchQuotes(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Text("ERROR");
-                            } else if (snapshot.hasData || snapshot.data != null) {
-                              DocumentSnapshot dQuotes = snapshot.data!.docs[_randomindex+1];
-                              idquotesnotif = dQuotes['idQuotes'];
-                              valuequotesnotif = dQuotes['value'];
-                            }
-                            return const Center(
-                                child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.pinkAccent,
-                                )),
-                              );
-                          },
-                        );
+                        // StreamBuilder<QuerySnapshot>(
+                        //   stream: searchQuotes(),
+                        //   builder: (context, snapshot) {
+                        //     if (snapshot.hasError) {
+                        //       return Text("ERROR");
+                        //     } else if (snapshot.hasData || snapshot.data != null) {
+                        //       DocumentSnapshot dQuotes = snapshot.data!.docs[_randomindex+1];
+                        //       idquotesnotif = dQuotes['idQuotes'];
+                        //       valuequotesnotif = dQuotes['value'];
+                        //     }
+                        //     return const Center(
+                        //         child: CircularProgressIndicator(
+                        //             valueColor: AlwaysStoppedAnimation<Color>(
+                        //           Colors.pinkAccent,
+                        //         )),
+                        //       );
+                        //   },
+                        // );
                         await service.showDailyNotification(
-                          id: _randomindex+1,
+                          id: 0,
                           title: 'I Challenge You',
-                          body: "${valuequotesnotif}"
+                          body: "body"
                         );
                       },
                       child: Text("Show Notifikasi")),
@@ -193,3 +221,5 @@ class _profilesState extends State<profiles> {
     return Database.getlistquotes((_randomindex+1).toString());
   }
 }
+
+

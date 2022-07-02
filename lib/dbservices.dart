@@ -204,3 +204,20 @@ Future<Map<String?, dynamic>> getUserData() async {
   });
   return userData;
 }
+
+Future<int> getLastLogin() async {
+  int angkallogin=0;
+  String lastLogin = "";
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final String uid = auth.currentUser!.uid.toString();
+  await FirebaseFirestore.instance
+      .collection('User')
+      .doc(auth.currentUser!.email.toString())
+      .get()
+      .then((value) {
+    lastLogin = value.get('lastLogin');
+    angkallogin=int.parse(lastLogin);
+    print(value.get('lastLogin'));
+  });
+  return angkallogin;
+}

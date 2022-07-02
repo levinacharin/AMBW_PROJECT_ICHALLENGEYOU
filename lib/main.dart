@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:ichallengeyouapp/LoginMenu.dart';
 import 'package:ichallengeyouapp/bmi.dart';
 import 'package:ichallengeyouapp/challenges.dart';
+import 'package:ichallengeyouapp/login.dart';
 import 'package:ichallengeyouapp/profile.dart';
 import 'dbservices.dart';
 import 'firebase_options.dart';
@@ -51,9 +52,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   
   String idcelens(){
+<<<<<<< Updated upstream
     ////int idchallengeygdigunakan = 1;
     String idstring = currentDate.day.toString();
     
+=======
+    int idchallengeygdigunakan = 1;
+    String idstring = idchallengeygdigunakan.toString();
+    int selisih = 0;
+    // int llogin = getLastLogin() as int;
+    // selisih = llogin - int.parse(currentDate.day.toString());
+    if(selisih!=0){
+      idchallengeygdigunakan = 2;
+      idstring = idchallengeygdigunakan.toString();
+    }
+>>>>>>> Stashed changes
     return idstring;
   }
   
@@ -85,7 +98,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   
 
   int currentIndex = 1;
+<<<<<<< Updated upstream
   @override
+=======
+  // String ehm = idcelens();
+  // final screens = [
+  //   bmi(),
+  //   challenges(
+  //       idchallenge: "1", emaill: auth.currentUser!.email.toString()),
+  //   profiles()
+  // ];
+  // @override
+>>>>>>> Stashed changes
   Widget build(BuildContext context) {
       final screens = [
       bmi(),

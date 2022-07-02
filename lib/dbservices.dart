@@ -23,6 +23,13 @@ class Database {
         .snapshots();
   }
 
+  // baca data quotes
+  static Stream<QuerySnapshot> getlistquotes(String idquotes) {
+    return listquotes
+      .where("idQuotes", isEqualTo: idquotes)
+      .snapshots();
+  }
+
   // static String getfield(String email, String idchall) {
   //   String nama='levina';
   //   listuser
@@ -196,6 +203,7 @@ Future<Map<String?, dynamic>> getUserData() async {
     };
   });
   return userData;
+<<<<<<< Updated upstream
 }
 
 Future<String> getLastLogin() async {
@@ -211,3 +219,6 @@ Future<String> getLastLogin() async {
   });
   return lastLogin;
 }
+=======
+}
+>>>>>>> Stashed changes

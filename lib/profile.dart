@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,10 @@ class profiles extends StatefulWidget {
 class _profilesState extends State<profiles> {
   late final LocalNotificationServices service;
 
+  int  _randomindex = 0;
+  String? idquotesnotif;
+  String? valuequotesnotif;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -39,7 +44,6 @@ class _profilesState extends State<profiles> {
           padding: EdgeInsets.all(10.0),
           color: Colors.orange[50],
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FutureBuilder<DocumentSnapshot>(
                 future: FirebaseFirestore.instance
@@ -123,20 +127,40 @@ class _profilesState extends State<profiles> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
-                  children: [
-                    const Text("Notification Quotes", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                  children: const[
+                    Text("Notification Quotes", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   ],
                 ),
                 Column(
                   children: [
                     ElevatedButton(
-                        onPressed: () async {
-                          await service.showDailyNotification(
-                              id: 0,
-                              title: 'Notification Title',
-                              body: 'NotificationB Body');
-                        },
-                        child: Text("Show Notifikasi")),
+                      onPressed: () async {
+                        randomIndexQuotes();
+                        StreamBuilder<QuerySnapshot>(
+                          stream: searchQuotes(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Text("ERROR");
+                            } else if (snapshot.hasData || snapshot.data != null) {
+                              DocumentSnapshot dQuotes = snapshot.data!.docs[_randomindex+1];
+                              idquotesnotif = dQuotes['idQuotes'];
+                              valuequotesnotif = dQuotes['value'];
+                            }
+                            return const Center(
+                                child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.pinkAccent,
+                                )),
+                              );
+                          },
+                        );
+                        await service.showDailyNotification(
+                          id: _randomindex+1,
+                          title: 'I Challenge You',
+                          body: "${valuequotesnotif}"
+                        );
+                      },
+                      child: Text("Show Notifikasi")),
                   ],
                 ),
               ],
@@ -155,5 +179,17 @@ class _profilesState extends State<profiles> {
         ),
       ),
     );
+  }
+  
+  void randomIndexQuotes() {
+    Random randomquotes = Random();
+    _randomindex = randomquotes.nextInt(4);
+  }
+  
+  Stream<QuerySnapshot<Object?>> searchQuotes() {
+    setState(() {
+      
+    });
+    return Database.getlistquotes((_randomindex+1).toString());
   }
 }

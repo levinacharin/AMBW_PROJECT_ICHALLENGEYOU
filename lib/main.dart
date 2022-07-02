@@ -97,6 +97,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       statusText = "reset";
       print("${DateTime.now()}");
     }
+    
   }
 
   int currentIndex = 1;
@@ -104,6 +105,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     bmi(),
     challenges(
         idchallenge: idstring, emaill: auth.currentUser!.email.toString()),
+        // idchallenge: "1",
+        // emaill: auth.currentUser!.email.toString()),
     profiles()
   ];
   @override

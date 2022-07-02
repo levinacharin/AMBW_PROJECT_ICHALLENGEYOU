@@ -25,6 +25,8 @@ class _profilesState extends State<profiles> {
   int _randomindex = 0;
   String? idquotesnotif;
   String? valuequotesnotif;
+  List<String> quotesnotif = [];
+  int randomindex = Random().nextInt(5) + 1;
 
   @override
   void initState() {
@@ -32,6 +34,10 @@ class _profilesState extends State<profiles> {
     service = LocalNotificationServices();
     service.initialize();
     super.initState();
+  }
+
+  void addtoquotes() async {
+    quotesnotif = await getQuotes();
   }
 
   @override
@@ -221,7 +227,9 @@ class _profilesState extends State<profiles> {
                             //   },
                             // );
                             await service.showDailyNotification(
-                                id: 0, title: 'I Challenge You', body: "body");
+                                id: 0,
+                                title: quotesnotif[randomindex].toString(),
+                                body: "body");
                           },
                           child: Text("Show Notifikasi")),
                       ElevatedButton(

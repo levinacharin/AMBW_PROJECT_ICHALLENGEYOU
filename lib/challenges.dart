@@ -41,11 +41,8 @@ class _challengesState extends State<challenges>with WidgetsBindingObserver{
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
     ubahstatusallnotyet(auth.currentUser!.email);
-    // if(currentDate.day!=widget.idchallenge){
-    //   Database.ubahstatusallnotyet(widget.emaill);
-    // }
+    
     return Database.getlistchallenge(
-        //widget.emaill, widget.idchallenge.toString());
         widget.emaill, widget.idchallenge);
   }
 

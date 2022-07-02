@@ -102,7 +102,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Text("${currentDate.day}"),
+        title: Text("I Challenge You"),
       ),
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(

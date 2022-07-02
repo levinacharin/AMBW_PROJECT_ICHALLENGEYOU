@@ -221,7 +221,8 @@ class _profilesState extends State<profiles> {
                             //   },
                             // );
                             await service.showDailyNotification(
-                                id: 0, title: 'I Challenge You', body: "body");
+                                id: 0, 
+                                title: 'I Challenge You', body: "body");
                           },
                           child: Text("Show Notifikasi")),
                       ElevatedButton(

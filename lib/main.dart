@@ -21,6 +21,7 @@ final String uid = auth.currentUser!.uid.toString();
 //late int idchallengeygdigunakan = 2;
 
 Future<void> main() async {
+  //ubahstatusallnotyet(auth.currentUser!.email);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -96,7 +97,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     final screens = [
       bmi(),
-      challenges(idchallenge: "1", emaill: auth.currentUser!.email.toString()),
+      challenges(idchallenge: currentDate.day.toString(), emaill: auth.currentUser!.email.toString()),
       profiles()
     ];
     return Scaffold(

@@ -75,14 +75,14 @@ class Database {
         .update({'health': healthscore}).catchError((e) => print(e));
   }
 
-  static Future<void> ubahstatusallnotyet(
-      String email) async {
-    listuser
-        .doc(email)
-        .collection("userchallenge")
-        .doc()
-        .update({'status': "notyet"}).catchError((e) => print(e));
-  }
+  // static Future<void> ubahstatusallnotyet(
+  //     String email) async {
+  //   listuser
+  //       .doc(email)
+  //       .collection("userchallenge")
+  //       .doc()
+  //       .update({'status': "notyet"}).catchError((e) => print(e));
+  // }
 
   // //update ganti hari
   // static Future<void> gantihari(String email) async {
@@ -242,18 +242,27 @@ Future<bool> getLastLogin() async {
     result = int.parse(lastLogin) - int.parse(currentdate.day.toString());
   });
   if (result != 0) {
+    print('beda');
     return true;
   } else {
+    print('ga beda');
+    print(lastLogin);
+    //print(currentdate.day.toString());
     return false;
   }
 }
 
 Future<void> ubahstatusallnotyet(String? email) async {
-  if (getLastLogin() == true) {
+  if (await getLastLogin() == true) {
+    print('masuk ubah status');
     listuser
         .doc(email)
         .collection("userchallenge")
-        .doc()
-        .update({'status': "notyet"}).catchError((e) => print(e));
+        .get().then((value){
+          value.docs.forEach((element) {
+            element.reference.update({'status':"notyet"});
+          });
+        });
+        //.update({'status': "notyet"}).catchError((e) => print(e));
   }
 }

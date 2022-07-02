@@ -22,7 +22,7 @@ class profiles extends StatefulWidget {
 class _profilesState extends State<profiles> {
   late final LocalNotificationServices service;
 
-  int  _randomindex = 0;
+  int _randomindex = 0;
   String? idquotesnotif;
   String? valuequotesnotif;
 
@@ -54,55 +54,88 @@ class _profilesState extends State<profiles> {
                   if (snapshot.hasData) {
                     Map<String?, dynamic> data =
                         snapshot.data!.data() as Map<String?, dynamic>;
+                    print(data);
                     return Container(
                       padding: EdgeInsets.fromLTRB(16, 16, 16, 5),
                       width: double.infinity,
                       child: Column(
                         children: [
-                          Text("I Challenge You", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-                          const SizedBox(height: 10,),
+                          Text(
+                            "I Challenge You",
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           Wrap(
                             children: [
                               Column(
                                 children: [
                                   Card(
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
                                     elevation: 10,
                                     child: Container(
                                       padding: EdgeInsets.all(16),
                                       child: Row(
                                         children: [
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: const [
                                               Text("Full Name        : ",
-                                                  style: TextStyle(fontSize: 20)),
-                                              SizedBox(height: 10,),
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Text("Birthdate          : ",
-                                                  style: TextStyle(fontSize: 20)),
-                                              SizedBox(height: 10,),
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Text("Phonenumber : ",
-                                                  style: TextStyle(fontSize: 20)),
-                                              SizedBox(height: 10,),
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Text("Username        : ",
-                                                  style: TextStyle(fontSize: 20))
+                                                  style:
+                                                      TextStyle(fontSize: 20))
                                             ],
                                           ),
-                                          const SizedBox(width: 5,),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
                                           Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text("${data['fullname']}",
-                                                  style: TextStyle(fontSize: 20)),
-                                              const SizedBox(height: 10,),
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
                                               Text("${data['birthdate']}",
-                                                  style: TextStyle(fontSize: 20)),
-                                              const SizedBox(height: 10,),
-                                              Text("${data['phonenumber]']}",
-                                                  style: TextStyle(fontSize: 20)),
-                                              const SizedBox(height: 10,),
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text("${data['phoneNumber']}",
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
                                               Text("${data['username']}",
-                                                  style: TextStyle(fontSize: 20)),
+                                                  style:
+                                                      TextStyle(fontSize: 20)),
                                             ],
                                           )
                                         ],
@@ -121,78 +154,92 @@ class _profilesState extends State<profiles> {
                   }
                 },
               ),
-              
-            const SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: const[
-                    Text("Notification Quotes", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  ],
-                ),
-                Column(
-                  children: [
-                    // FutureBuilder<DocumentSnapshot>(
-                    //   future: 
-                    //     FirebaseFirestore.instance
-                    //       .collection('Quotes')
-                    //       .get()
-                    //       .then((value) {
-                    //         value.docs.forEach((element) {
-                              
-                    //         });
-                    //       }),
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.hasData) {
-                    //       Map<String?, dynamic> data =
-                    //           snapshot.data!.data() as Map<String?, dynamic>;
-                    //       return Container(
-                    //         padding: EdgeInsets.fromLTRB(16, 16, 16, 5),
-                    //         width: double.infinity,
-                    //         child: Column(
-                    //           children: [
-                              
-                    //           ],
-                    //         ),
-                    //       );
-                    //     } else {
-                    //       return Text('Loading...');
-                    //     }
-                    //   },
-                    // ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        randomIndexQuotes();
-                        // StreamBuilder<QuerySnapshot>(
-                        //   stream: searchQuotes(),
-                        //   builder: (context, snapshot) {
-                        //     if (snapshot.hasError) {
-                        //       return Text("ERROR");
-                        //     } else if (snapshot.hasData || snapshot.data != null) {
-                        //       DocumentSnapshot dQuotes = snapshot.data!.docs[_randomindex+1];
-                        //       idquotesnotif = dQuotes['idQuotes'];
-                        //       valuequotesnotif = dQuotes['value'];
-                        //     }
-                        //     return const Center(
-                        //         child: CircularProgressIndicator(
-                        //             valueColor: AlwaysStoppedAnimation<Color>(
-                        //           Colors.pinkAccent,
-                        //         )),
-                        //       );
-                        //   },
-                        // );
-                        await service.showDailyNotification(
-                          id: 0,
-                          title: 'I Challenge You',
-                          body: "body"
-                        );
-                      },
-                      child: Text("Show Notifikasi")),
-                  ],
-                ),
-              ],
-            ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: const [
+                      Text(
+                        "Notification Quotes",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      // FutureBuilder<DocumentSnapshot>(
+                      //   future:
+                      //     FirebaseFirestore.instance
+                      //       .collection('Quotes')
+                      //       .get()
+                      //       .then((value) {
+                      //         value.docs.forEach((element) {
+
+                      //         });
+                      //       }),
+                      //   builder: (context, snapshot) {
+                      //     if (snapshot.hasData) {
+                      //       Map<String?, dynamic> data =
+                      //           snapshot.data!.data() as Map<String?, dynamic>;
+                      //       return Container(
+                      //         padding: EdgeInsets.fromLTRB(16, 16, 16, 5),
+                      //         width: double.infinity,
+                      //         child: Column(
+                      //           children: [
+
+                      //           ],
+                      //         ),
+                      //       );
+                      //     } else {
+                      //       return Text('Loading...');
+                      //     }
+                      //   },
+                      // ),
+                      ElevatedButton(
+                          onPressed: () async {
+                            randomIndexQuotes();
+                            // StreamBuilder<QuerySnapshot>(
+                            //   stream: searchQuotes(),
+                            //   builder: (context, snapshot) {
+                            //     if (snapshot.hasError) {
+                            //       return Text("ERROR");
+                            //     } else if (snapshot.hasData || snapshot.data != null) {
+                            //       DocumentSnapshot dQuotes = snapshot.data!.docs[_randomindex+1];
+                            //       idquotesnotif = dQuotes['idQuotes'];
+                            //       valuequotesnotif = dQuotes['value'];
+                            //     }
+                            //     return const Center(
+                            //         child: CircularProgressIndicator(
+                            //             valueColor: AlwaysStoppedAnimation<Color>(
+                            //           Colors.pinkAccent,
+                            //         )),
+                            //       );
+                            //   },
+                            // );
+                            await service.showDailyNotification(
+                                id: 0, title: 'I Challenge You', body: "body");
+                          },
+                          child: Text("Show Notifikasi")),
+                      ElevatedButton(
+                          onPressed: () {
+                            DateTime date = DateTime.now();
+                            FirebaseAuth.instance.signOut();
+                            FirebaseFirestore.instance
+                                .collection('User')
+                                .doc(FirebaseAuth.instance.currentUser!.email)
+                                .update({
+                              "lastLogin": date.day.toString(),
+                            });
+                          },
+                          child: Text("Log Out")),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -208,18 +255,14 @@ class _profilesState extends State<profiles> {
       ),
     );
   }
-  
+
   void randomIndexQuotes() {
     Random randomquotes = Random();
     _randomindex = randomquotes.nextInt(4);
   }
-  
+
   Stream<QuerySnapshot<Object?>> searchQuotes() {
-    setState(() {
-      
-    });
-    return Database.getlistquotes((_randomindex+1).toString());
+    setState(() {});
+    return Database.getlistquotes((_randomindex + 1).toString());
   }
 }
-
-

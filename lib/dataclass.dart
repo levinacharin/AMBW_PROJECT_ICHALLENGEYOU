@@ -32,3 +32,27 @@ class itemChallenge{
   }
 
 }
+
+
+class itemQuotes {
+  final String itemId;
+  final String itemvalue;
+
+  itemQuotes({required this.itemId, required this.itemvalue});
+
+  // to json
+  Map<String, dynamic> toJson() {
+    return {
+      "idQuotes" : itemId,
+      "value" : itemvalue
+    };
+  }
+
+   // from json
+  factory itemQuotes.fromJson(Map<String, dynamic> json ) {
+    return itemQuotes(
+      itemId: json['idQuotes'], 
+      itemvalue: json['value']
+    );
+  }
+}

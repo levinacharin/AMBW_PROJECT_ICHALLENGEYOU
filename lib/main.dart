@@ -52,21 +52,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   
   String idcelens(){
-<<<<<<< Updated upstream
-    ////int idchallengeygdigunakan = 1;
+    //int idchallengeygdigunakan = 1;
     String idstring = currentDate.day.toString();
-    
-=======
-    int idchallengeygdigunakan = 1;
-    String idstring = idchallengeygdigunakan.toString();
-    int selisih = 0;
+    //int selisih = 0;
     // int llogin = getLastLogin() as int;
     // selisih = llogin - int.parse(currentDate.day.toString());
-    if(selisih!=0){
-      idchallengeygdigunakan = 2;
-      idstring = idchallengeygdigunakan.toString();
-    }
->>>>>>> Stashed changes
+    // if(selisih!=0){
+    //   idchallengeygdigunakan = 2;
+    //   idstring = idchallengeygdigunakan.toString();
+    // }
     return idstring;
   }
   
@@ -98,9 +92,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   
 
   int currentIndex = 1;
-<<<<<<< Updated upstream
-  @override
-=======
   // String ehm = idcelens();
   // final screens = [
   //   bmi(),
@@ -109,7 +100,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   profiles()
   // ];
   // @override
->>>>>>> Stashed changes
   Widget build(BuildContext context) {
       final screens = [
       bmi(),

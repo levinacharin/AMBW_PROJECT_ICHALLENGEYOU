@@ -13,6 +13,7 @@ import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'definit.dart';
 
 double _healthScore = 0;
+String testingambilchallenge='0';
 
 class challenges extends StatefulWidget {
   final String idchallenge;
@@ -46,6 +47,7 @@ class _challengesState extends State<challenges> with WidgetsBindingObserver {
         //widget.emaill, widget.idchallenge.toString());
         widget.emaill,
         widget.idchallenge);
+        //testingambilchallenge);
   }
 
   Widget alarmlay(BuildContext context, String desc_challenge) {
@@ -236,7 +238,8 @@ class _challengesState extends State<challenges> with WidgetsBindingObserver {
                       "I Challenge You",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    )),
+                )),
+                
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
                   decoration: new BoxDecoration(color: Colors.orange[100]),
@@ -317,6 +320,27 @@ class _challengesState extends State<challenges> with WidgetsBindingObserver {
                     ],
                   ),
                 ),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '1';
+                // }, child: Text("1")),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '2';
+                // }, child: Text("2")),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '3';
+                // }, child: Text("3")),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '4';
+                // }, child: Text("4")),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '5';
+                // }, child: Text("5")),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '6';
+                // }, child: Text("6")),
+                // ElevatedButton(onPressed: (){
+                //   testingambilchallenge = '7';
+                // }, child: Text("7")),
                 Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                     stream: listchallengeuser(),

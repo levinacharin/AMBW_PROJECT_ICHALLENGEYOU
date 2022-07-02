@@ -51,15 +51,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   
   String idcelens(){
-    int idchallengeygdigunakan = 1;
-    String idstring = idchallengeygdigunakan.toString();
-    int selisih = 0;
-    int llogin = getLastLogin() as int;
-    selisih = llogin - int.parse(currentDate.day.toString());
-    if(selisih!=0){
-      idchallengeygdigunakan = 2;
-      idstring = idchallengeygdigunakan.toString();
-    }
+    ////int idchallengeygdigunakan = 1;
+    String idstring = currentDate.day.toString();
+    
     return idstring;
   }
   
@@ -88,55 +82,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
-  // _initWatcher() {
-  //   _controller ??= TimeChangeDetector.init;
-  //   print('mess123:$_message');
-  //   _subscription = _controller!.listen((event) {
-  //     setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
-  //     print(_message);
-  //   },
-  //       onError: (error) => print('$ERROR: $error'),
-  //       onDone: () => print(STREAM_COMPLETE));
-
-  //   // CONDITIONAL DETECT GANTI HARI
-  //   // if (currentDate.day == 5) {
-  //   //   //idchallengeygdigunakan = Random().nextInt(1) + 1;
-  //   //   // idchallengeygdigunakan = 2;
-  //   //   // statusText = "reset";
-  //   //   // print('reset:$statusText');
-  //   //   idchallengeygdigunakan = 2;
-  //   //   idstring = idchallengeygdigunakan.toString();
-  //   // }
-
-  //   // // if (currentDate.hour == 00 && currentDate.minute >= 01) {
-  //   // //   statusText = "no reset";
-  //   // // }
-  //   // if (currentDate.hour == 00) {
-  //   //   idchallengeygdigunakan = 2;
-  //   //   statusText = "reset";
-  //   //   print("${DateTime.now()}");
-  //   // }
-
-  //   // if(hitung()!=0){
-  //   //   idchallengeygdigunakan = 2;
-  //   //   idstring = idchallengeygdigunakan.toString();
-  //   // }
-  // }
-
-  //getLastLogin();
   
-  // final int selisih = 0;
-  // int llogin = getLastLogin() as int;
-  // selisih = llogin-currentDate.day;
 
   int currentIndex = 1;
-  //String ehm = idcelens();
-  // final screens = [
-  //   bmi(),
-  //   challenges(
-  //       idchallenge: idcelens(), emaill: auth.currentUser!.email.toString()),
-  //   profiles()
-  // ];
   @override
   Widget build(BuildContext context) {
       final screens = [

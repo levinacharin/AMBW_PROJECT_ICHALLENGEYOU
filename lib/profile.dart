@@ -12,6 +12,7 @@ import 'package:ichallengeyouapp/notifservices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ichallengeyouapp/edit_profile.dart';
+
 final FirebaseAuth auth = FirebaseAuth.instance;
 
 class profiles extends StatefulWidget {
@@ -234,12 +235,11 @@ class _profilesState extends State<profiles> {
                           },
                           child: Text("Show Notifikasi")),
                       ElevatedButton(
-                          onPressed: () async{
+                          onPressed: () async {
                             DateTime date = DateTime.now();
-                            
                             await FirebaseFirestore.instance
                                 .collection('User')
-                                .doc(auth.currentUser!.email.toString())
+                                .doc(auth.currentUser!.email)
                                 .update({
                               "lastLogin": date.day.toString(),
                             });

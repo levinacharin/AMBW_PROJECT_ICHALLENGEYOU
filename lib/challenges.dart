@@ -13,8 +13,6 @@ import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'definit.dart';
 
 double _healthScore = 0;
-//int randomid = Random().nextInt(1) + 1;
-//int randomid = 1;
 
 class challenges extends StatefulWidget {
   final String idchallenge;
@@ -28,68 +26,11 @@ class challenges extends StatefulWidget {
 }
 
 class _challengesState extends State<challenges>with WidgetsBindingObserver{
-  Stream<bool>? _controller;
-  String _message = EVENT_MESSAGE_DEFAULT;
-  //String idcelensneh=randomid.toString();
-  
-
-  late StreamSubscription _subscription;
-
-  DateTime currentDate = DateTime.now();
-  String statusText = 'no reset';
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed || 
-      state == AppLifecycleState.paused|| 
-      state == AppLifecycleState.detached) {
-      _initWatcher();
-    }
-  }
-
-  _initWatcher() {
-    _controller ??= TimeChangeDetector.init;
-    print('mess123:$_message');
-    _subscription = _controller!.listen((event) {
-      setState(() => _message = '$EVENT_MESSAGE_SUCCESS: ${DateTime.now()}');
-      print(_message);
-    },
-      onError: (error) => print('$ERROR: $error'),
-      onDone: () => print(STREAM_COMPLETE));
-
-    // CONDITIONAL DETECT GANTI HARI
-    if (currentDate.day == 5) {
-      //idchallengeygdigunakan = Random().nextInt(1) + 1;
-      //idcelensneh=2;
-      // randomid=2;
-      // idcelensneh='2';
-      //idchallengeygdigunakan = 2;
-      statusText = "reset";
-      print('reset:$statusText');
-    }
-
-    // if (currentDate.hour == 00 && currentDate.minute >= 01) {
-    //   statusText = "no reset";
-    // }
-  }
   
   TextEditingController hourController = TextEditingController();
   TextEditingController minuteController = TextEditingController();
   int _jumlah = 0;
-
+//@override
   Stream<QuerySnapshot<Object?>> listchallengeuser() {
     setState(() {});
     return Database.getlistchallenge(

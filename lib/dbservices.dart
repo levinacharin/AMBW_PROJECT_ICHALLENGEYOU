@@ -203,7 +203,6 @@ Future<Map<String?, dynamic>> getUserData() async {
     };
   });
   return userData;
-<<<<<<< Updated upstream
 }
 
 Future<int> getLastLogin() async {
@@ -222,6 +221,3 @@ Future<int> getLastLogin() async {
   });
   return angkallogin;
 }
-=======
-}
->>>>>>> Stashed changes

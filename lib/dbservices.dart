@@ -9,7 +9,8 @@ import 'package:flutter/cupertino.dart';
 CollectionReference listuser = FirebaseFirestore.instance.collection("User");
 CollectionReference listchallenge =
     FirebaseFirestore.instance.collection("challenges");
-CollectionReference listquotes = FirebaseFirestore.instance.collection("Quotes");
+CollectionReference listquotes =
+    FirebaseFirestore.instance.collection("Quotes");
 //DocumentReference
 
 class Database {
@@ -39,9 +40,7 @@ class Database {
 
   // baca data quotes
   static Stream<QuerySnapshot> getlistquotes(String idquotes) {
-    return listquotes
-      .where("idQuotes", isEqualTo: idquotes)
-      .snapshots();
+    return listquotes.where("idQuotes", isEqualTo: idquotes).snapshots();
   }
 
   // static String getfield(String email, String idchall) {
@@ -228,9 +227,9 @@ Future<Map<String?, dynamic>> getUserData() async {
   return userData;
 }
 
-Future<int> getLastLogin() async {
-  int angkallogin=0;
+Future<bool> getLastLogin() async {
   String lastLogin = "";
+  int result = 0;
   final FirebaseAuth auth = FirebaseAuth.instance;
   final String uid = auth.currentUser!.uid.toString();
   await FirebaseFirestore.instance
@@ -239,8 +238,22 @@ Future<int> getLastLogin() async {
       .get()
       .then((value) {
     lastLogin = value.get('lastLogin');
-    angkallogin=int.parse(lastLogin);
-    print(value.get('lastLogin'));
+    DateTime currentdate = DateTime.now();
+    result = int.parse(lastLogin) - int.parse(currentdate.day.toString());
   });
-  return angkallogin;
+  if (result != 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Future<void> ubahstatusallnotyet(String? email) async {
+  if (getLastLogin() == true) {
+    listuser
+        .doc(email)
+        .collection("userchallenge")
+        .doc()
+        .update({'status': "notyet"}).catchError((e) => print(e));
+  }
 }

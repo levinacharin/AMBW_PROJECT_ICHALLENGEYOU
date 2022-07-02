@@ -89,18 +89,11 @@ class _LoginState extends State<Login> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          DateTime date = DateTime.now();
           FirebaseAuth.instance
               .signInWithEmailAndPassword(
                   email: EmailController.text,
                   password: PasswordController.text)
               .then((user) {
-            FirebaseFirestore.instance
-                .collection('User')
-                .doc(FirebaseAuth.instance.currentUser!.email)
-                .update({
-              "lastLogin": date.day.toString(),
-            });
             Navigator.push(
               context,
               MaterialPageRoute(

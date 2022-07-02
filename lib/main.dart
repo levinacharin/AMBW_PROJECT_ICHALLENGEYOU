@@ -22,8 +22,6 @@ final String uid = auth.currentUser!.uid.toString();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //getLastLogin();
-  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -50,21 +48,18 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   DateTime currentDate = DateTime.now();
   String statusText = 'no reset';
 
-  
-  String idcelens(){
-    //int idchallengeygdigunakan = 1;
-    String idstring = currentDate.day.toString();
-    //int selisih = 0;
-    // int llogin = getLastLogin() as int;
-    // selisih = llogin - int.parse(currentDate.day.toString());
-    // if(selisih!=0){
-    //   idchallengeygdigunakan = 2;
-    //   idstring = idchallengeygdigunakan.toString();
-    // }
-    return idstring;
-  }
-  
-  
+  // Future<String> idcelens() async {
+  //   int idchallengeygdigunakan = 1;
+  //   String idstring = idchallengeygdigunakan.toString();
+  //   DateTime datenow = new DateTime.now();
+  //   int selisih = 0;
+  //   String llogin = await getLastLogin();
+  //   selisih = int.parse(llogin) - int.parse(datenow.day.toString());
+  //   if (selisih != 0) {
+  //     idstring = datenow.day.toString();
+  //   }
+  //   return idstring;
+  // }
 
   @override
   void initState() {
@@ -89,8 +84,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
-  
-
   int currentIndex = 1;
   // String ehm = idcelens();
   // final screens = [
@@ -101,10 +94,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   // ];
   // @override
   Widget build(BuildContext context) {
-      final screens = [
+    final screens = [
       bmi(),
-      challenges(
-          idchallenge: idcelens(), emaill: auth.currentUser!.email.toString()),
+      challenges(idchallenge: "1", emaill: auth.currentUser!.email.toString()),
       profiles()
     ];
     return Scaffold(

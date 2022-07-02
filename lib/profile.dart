@@ -7,10 +7,12 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:ichallengeyouapp/LoginMenu.dart';
 import 'package:ichallengeyouapp/dbservices.dart';
+import 'package:ichallengeyouapp/main.dart';
 import 'package:ichallengeyouapp/notifservices.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ichallengeyouapp/edit_profile.dart';
+final FirebaseAuth auth = FirebaseAuth.instance;
 
 class profiles extends StatefulWidget {
   const profiles({Key? key}) : super(key: key);
@@ -228,19 +230,21 @@ class _profilesState extends State<profiles> {
                             await service.showDailyNotification(
                                 id: 0,
                                 title: quotesnotif[randomindex].toString(),
-                                body: "body");
+                                body: "");
                           },
                           child: Text("Show Notifikasi")),
                       ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             DateTime date = DateTime.now();
-                            FirebaseAuth.instance.signOut();
-                            FirebaseFirestore.instance
+                            
+                            await FirebaseFirestore.instance
                                 .collection('User')
-                                .doc(FirebaseAuth.instance.currentUser!.email)
+                                .doc(auth.currentUser!.email.toString())
                                 .update({
                               "lastLogin": date.day.toString(),
                             });
+                            await FirebaseAuth.instance.signOut();
+                            Navigator.pop(context);
                           },
                           child: Text("Log Out")),
                     ],

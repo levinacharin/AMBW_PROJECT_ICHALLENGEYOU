@@ -60,11 +60,11 @@ class LocalNotificationServices {
     required String body,
   }) async {
     final details = await _notificationDetails();
-    await _localNotificationService.show(
+    await _localNotificationService.periodicallyShow(
       id, 
       title, 
       body, 
-      // RepeatInterval.daily,
+      RepeatInterval.everyMinute,
       details
     );
   }

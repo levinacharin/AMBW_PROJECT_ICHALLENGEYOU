@@ -109,6 +109,7 @@ Future<void> registerUser(String? name, String? birthdate, String? phoneNumber,
     'phoneNumber': phoneNumber,
     'statusNotification': "false",
     'username': username,
+    'lastLogin': DateTime.now().day.toString(),
   });
   inputuserChallengesfromchallenge();
   return;

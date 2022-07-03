@@ -1,5 +1,5 @@
 # ichallengeyouapp
-
+Link Video : https://clipchamp.com/watch/QncoN9C5fn1
 Pembagian Pekerjaan: 
 
 Yehezkiel:

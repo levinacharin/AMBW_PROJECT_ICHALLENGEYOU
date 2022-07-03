@@ -1,21 +1,30 @@
 # ichallengeyouapp
 
-Pembagian Pekerjaan:
-Yehezkiel:
-- profile
-  - profile akan menyimpan data" dari user na yg di smpn DB firebase
-- edit profile
-  - Bisa mengedit username dari profile nya  
-- register
-  - melakukan penambahan data user disimpan dalam Db firebase nya 
+Pembagian Pekerjaan: 
 
+Yehezkiel:
+profile
+edit profile
+register
+login
+email authentification
+add new user firebase and user's need : challenge collection and user data
+detect ganti hari
 
 Felicia:
-- BMI Calculator
-- result BMI calculator
+BMI Calculator
+result BMI calculator
+detect ganti hari
+daily notifications
+healthscore
+bottomnavbar
+
+
 
 Levina:
 - challenges
-  - membutuhkan koneksi database
-- set alarm and done challenges
-  - membutuhkan alarm
+- set status challenge done
+- mengganti paket challenge setiap hari 
+- userchallenge database
+- flutter alarm clock untuk mengatur alarm jika user memilih alarm pada challenge
+-detect ganti hari
